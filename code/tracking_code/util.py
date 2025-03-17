@@ -596,10 +596,10 @@ def get_object_bbs_seg(data):
         annotations = entry['annotations']
         for annotation in annotations:
             annotation_seg = []
-            if 'left' not in annotation['name'] and 'right' not in annotation['name']:
+            if 'left hand' not in annotation['name'] and 'right hand' not in annotation['name']:
                 p_list.append(get_bounding_box([item for sublist in annotation['segments'] for item in sublist]))
                 obj_list.append(annotation['name'])
-            if 'left hand' in annotation['name'] or 'right hand' in annotation['name']:
+            elif 'left hand' in annotation['name'] or 'right hand' in annotation['name']:
                 for polygon in annotation['segments']:
                     for poly in polygon:
                         if poly == []:
@@ -607,7 +607,24 @@ def get_object_bbs_seg(data):
                         annotation_seg.append(np.array(poly, dtype=np.int32))
             if len(annotation_seg) > 0:
                 annotation_list.append(annotation_seg)
-        bbs_dict[frame_name] = (annotation_list, p_list, obj_list)
+
+        if frame_name not in bbs_dict.keys():
+            bbs_dict[frame_name] = (annotation_list, p_list, obj_list)
+        else:
+            # Get the current lists from the dictionary
+            current_annotation_list, current_p_list, current_obj_list = bbs_dict[frame_name]
+
+            # Extend the lists with new elements that are not already present
+            for j, obj in enumerate(obj_list):
+                if obj not in current_obj_list:
+                    current_p_list.append(p_list[j])
+                    current_obj_list.append(obj)
+            if len(annotation_list) > 0:
+                current_annotation_list.extend(annotation_list)
+
+            # Update the dictionary with the extended lists
+            bbs_dict[frame_name] = (current_annotation_list, current_p_list, current_obj_list)
+
     return bbs_dict
 
 
