@@ -201,15 +201,14 @@ python code/evaluation_code/scripts/run_eval.py
 
 If you use our code, please cite:
 
-<code>@inproceedings{Plizzari2025OSNOM,
-    title={Spatial Cognition from Egocentric Video: Out of Sight, Not Out of Mind},
-    author={Plizzari, Chiara and Goel, Shubham and Perrett, Toby and Chalk, Jacob and Kanazawa, Angjoo and Damen, Dima},
-    booktitle={2025 International Conference on 3D Vision (3DV)},
-    year={2025}
-}</code>
-
-
-
+```bibtex
+@inproceedings{Plizzari2025OSNOM,
+title={Spatial Cognition from Egocentric Video: Out of Sight, Not Out of Mind},
+author={Plizzari, Chiara and Goel, Shubham and Perrett, Toby and Chalk, Jacob and Kanazawa, Angjoo and Damen, Dima},
+booktitle={2025 International Conference on 3D Vision (3DV)},
+year={2025}
+}
+```
 
 ## License
 
