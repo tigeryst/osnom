@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-EPIC_KITCHENS_PATH = './data/EPIC-KITCHENS/'
+FRAMES_PATH = './data/images/'
 
 
 def run_for_all_videos(video_list, results_path, data_path, output_dir, name_prefix):
@@ -23,7 +23,7 @@ def run_for_all_videos(video_list, results_path, data_path, output_dir, name_pre
         command = [
             "python", "./code/evaluation_code/evaluate.py",
             "--results_path", results_path,
-            "--frames_path", os.path.join(EPIC_KITCHENS_PATH, kitchen, "rgb_frames", video),
+            "--frames_path", os.path.join(FRAMES_PATH, kitchen, "rgb_frames", video),
             "--data_path", data_path,
             "--kitchen", kitchen,
             "--video", video_id,

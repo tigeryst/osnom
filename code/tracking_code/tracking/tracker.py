@@ -154,10 +154,10 @@ class PHALP(nn.Module):
         self.RGB_tuples = get_colors()
         self.kitchen = self.cfg.kitchen
         self.base_path = self.cfg.base_path
-        first_number = self.kitchen.split('_')[0]
+        participant = self.kitchen.split('_')[0]
 
         self.data_path = f"{self.base_path}/data/aggregated/{self.cfg.kitchen}/"
-        self.frames_path = f"{self.base_path}/EPIC-KITCHENS/{first_number}/rgb_frames/{self.cfg.kitchen}/"
+        self.frames_path = f"{self.base_path}/data/images/{self.cfg.kitchen}/"
         with open(os.path.join(self.data_path, 'poses.json'), 'r') as f:
             self.poses = json.load(f)
         self.masks, _, self.camera_poses, self.frames, _ = read_data_1(self.data_path, '', self.cfg.kitchen, True)
