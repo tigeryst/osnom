@@ -66,15 +66,14 @@ bash code/mesh_generation_code/reconstruct_mesh.sh $VIDEO_ID
 The mesh of each video has different scales. We rescale each kitchen using cupboards as the standard unit, which is 60 cm (or 24 inches). The scores for rescaling each kitchen are provided in the file `data/scaling_scores_dict.txt`.
 
 ## 2D Object Masks
-We use active object masks from [VISOR](https://epic-kitchens.github.io/VISOR/) in our method and baselines. The VISOR mask annotations can be downloaded from the following link: [VISOR Annotations](https://doi.org/10.5523/bris.2v6cgv1x04ol22qp9rm9x2j6a7) by accessing the `Interpolations-DenseAnnotations/train/` directory. Note they also provide a file that maps frame numbers between VISOR and publicly released rgb_frames in EPIC-KITCHENS-55 and EPIC-KITCHENS-100.
-You can find this at: frame_mapping.json.
 
 ## Camera Poses
-We use camera poses from the [EPIC-Fields dataset](https://epic-kitchens.github.io/VISOR/). Camera Poses annotations can be downloaded from the following link: [camera poses](https://www.dropbox.com/scl/fo/8li0s3fku8aeaeymd7vqr/h?rlkey=oalzl6cw877d71ljun2ai6iwm&dl=0).
+We use active object masks from [VISOR](https://epic-kitchens.github.io/VISOR/) in our method and baselines. The VISOR mask annotations can be downloaded from the following link: [VISOR Annotations](https://doi.org/10.5523/bris.2v6cgv1x04ol22qp9rm9x2j6a7) by accessing the [`Interpolations-DenseAnnotations/train/`](https://data.bris.ac.uk/data/dataset/a303c84f43214cdb0f31d53f51aa4786) directory. Note they also provide a file that maps frame numbers between VISOR and publicly released rgb_frames in EPIC-KITCHENS-55 and EPIC-KITCHENS-100.
+You can find this at: [frame_mapping.json](https://data.bris.ac.uk/datasets/2v6cgv1x04ol22qp9rm9x2j6a7/frame_mapping.json).
 
-## Data Structure
 
 The directory structure for the dataset used in the provided command should look as follows:
+We use camera poses from the [EPIC-Fields dataset](https://epic-kitchens.github.io/epic-fields/). Dense camera poses annotations can be downloaded from the following link: [camera poses](https://www.dropbox.com/scl/fo/onqyany4ze39pknck49ir/AKTS2LUt3WxFd02z7GdLYqM?rlkey=fc8gb6dz1pi6r89b30ma43x3m&e=1&dl=0).
 
 ```
 ./data/aggregated/{VIDEO_ID}/
