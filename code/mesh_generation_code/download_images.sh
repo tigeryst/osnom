@@ -53,6 +53,7 @@ if [ ! -f "$images_downloaded_token" ]; then
     mkdir -p $IMAGES_DIR/$VIDEO_ID
     tar -xf $tarball_path -C $IMAGES_DIR/$VIDEO_ID
     rm $tarball_path
+    rm $tarball_dir/$tarball_done_token
 
     touch $images_downloaded_token
 else
