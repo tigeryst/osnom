@@ -11,10 +11,12 @@ from scipy.optimize import linear_sum_assignment
 import cv2
 import torchvision.transforms as T
 from colordict import *
+from colordict import ColorDict
 from trimesh import path
 import os
 import math
 from pytorch3d.transforms import matrix_to_quaternion, quaternion_to_matrix
+import json
 
 rescale_scores = {
     'P03_04': 0.9744356799,
