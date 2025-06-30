@@ -211,9 +211,9 @@ If you use our code, please cite:
 
 
 
-All files in this repository are copyright by us and published under the Creative Commons Attribution-NonCommerial 4.0 International License, found <a href="http://en.wikipedia.org/wiki/Main_Page">here</a>. This means that you must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. You may not use the material for commercial purposes.
 ## License
 
+All files in this repository are copyright by us and published under the Creative Commons Attribution-NonCommerial 4.0 International License, found [here](http://en.wikipedia.org/wiki/Main_Page). This means that you must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. You may not use the material for commercial purposes.
 
 Research at Bristol is supported by EPSRC Fellowship UMPIRE (EP/T004991/1) and EPSRC Program Grant Visual AI (EP/T028572/1). We particularly thank Jitendra Malik for early discussions and insights on this work. We also thank members of the BAIR community for helpful discussions. This project acknowledges the use of University of Bristol’s Blue Crystal 4 (BC4) HPC facilities. 
 ## Acknowledgements
