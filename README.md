@@ -7,7 +7,8 @@ This is the official resource for the 3DV 2025 paper "Spatial Cognition from Ego
 ![key figure showing LMK framework](resources/teaser.png)
 
 ## Install the environment
-Please install the dependencies using 
+
+Please install the dependencies using
 
 `conda env create --name OSNOM --file environment.yml`
 
@@ -55,8 +56,10 @@ mkdir -p data/colmap_models/sparse/
 unzip ${VIDEO_ID}.zip -d data/colmap_models/sparse/$VIDEO_ID/
 ```
 
-Extract image frames to `data/aggregated/images/$VIDEO_ID/frame_XXXXXXX.jpg` from the downloaded videos to be in sync with the frame names/numbers in `images.bin` above, or directly download the image frames from the EPIC-KITCHENS dataset in this format using:
 #### Extracted Images
+
+Extract image frames to `data/images/$VIDEO_ID/frame_XXXXXXX.jpg` from the downloaded videos to be in sync with the frame names/numbers in `images.bin` above, or directly download the image frames from the EPIC-KITCHENS dataset in this format using:
+
 ```bash
 bash code/mesh_generation_code/download_images.sh $VIDEO_ID
 ```
@@ -67,7 +70,7 @@ First, install [COLMAP](https://colmap.github.io/) with CUDA support. Then, you 
 
 ```bash
 bash code/mesh_generation_code/reconstruct_mesh.sh $VIDEO_ID
-# Saves reconstructed meshes to data/colmap_models/dense3D/$VIDEO_ID/fused-minpix15-meshed-poisson-d10-t5.ply
+# Saves reconstructed meshes to data/colmap_models/dense3D/$VIDEO_ID/fused-minpix15-meshed-delaunay-qreg5.ply
 ```
 
 ### Scaling Scores
@@ -81,25 +84,26 @@ You can find this at: [frame_mapping.json](https://data.bris.ac.uk/datasets/2v6c
 
 ### Camera Poses
 
-The directory structure for the dataset used in the provided command should look as follows:
 We use camera poses from the [EPIC-Fields dataset](https://epic-kitchens.github.io/epic-fields/). Dense camera poses annotations can be downloaded from the following link: [camera poses](https://www.dropbox.com/scl/fo/onqyany4ze39pknck49ir/AKTS2LUt3WxFd02z7GdLYqM?rlkey=fc8gb6dz1pi6r89b30ma43x3m&e=1&dl=0).
 
 ### Final Data Structure
+
+The directory structure for the dataset required by the following commands provided is as follows:
 
 ```text
 ./data/aggregated/{VIDEO_ID}/
 │
 ├── poses.json                # Contains the camera poses
 ├── fused-minpix15-meshed-delaunay-qreg5.ply  # 3D mesh for the video
-└── mask_annotations.json      # Contains the VISOR mask annotations 
+└── mask_annotations.json      # Contains the VISOR mask annotations
 ```
 
-Where `{VIDEO_ID}` is the name of the specific video being processed, `poses.json` are the dense camera poses from EPIC-Fields, `fused-minpix15-meshed-delaunay-qreg5.ply` is the extracted mesh, `mask_annotations.json` are the VISOR mask annotations from VISOR. 
+where `{VIDEO_ID}` is the name of the specific video being processed, `poses.json` are the dense camera poses downloaded from EPIC-Fields and renamed, `fused-minpix15-meshed-delaunay-qreg5.ply` is the extracted mesh from COLMAP, `mask_annotations.json` are the VISOR mask annotations from VISOR.
 
-In addition, the path for frames is located at:
+In addition, frames must be located at:
 
-./EPIC-KITCHENS/{participant}/rgb_frames/{VIDEO_ID}/
 ```text
+./data/images/{VIDEO_ID}/
 │
 ├── frame_001.jpg             # RGB frames for each video frame
 ├── frame_002.jpg
@@ -107,8 +111,7 @@ In addition, the path for frames is located at:
 └── ...                       # Other RGB frames for the video
 ```
 
-Where `{participant}` and `{VIDEO_ID}` are specific to the video being processed.
-
+where `{participant}` and `{VIDEO_ID}` are specific to the video being processed.
 
 ### Feature Extraction
 
@@ -128,7 +131,7 @@ The output is a dictionary with the following format:
 {
     "frame_name_1": (
         features,  # Numpy array of feature vectors for objects in the frame
-        object_ids            # List of object identifiers for the tracked objects
+        object_ids  # List of object identifiers for the tracked objects
     ),
     "frame_name_2": (
         features,
@@ -137,8 +140,8 @@ The output is a dictionary with the following format:
     ...
 }
 ```
-The path where the 2D and 3D features are saved is as follows:
 
+The paths where the 2D and 3D features are saved are as follows:
 
 ```bash
 ./saved_feat_2D/{video}/2D_feat_{video}.pkl
@@ -189,7 +192,7 @@ The output is a dictionary with the following format:
 
 `results_grid[n][r] = percentage`
 
-Where `n` represents the distance in frames from the evaluation frame, and `r` is the radius. For each evaluation frame at distance `n` and for each radius `r`, we save the percentage of correctly located objects.
+where `n` represents the distance in frames from the evaluation frame, and `r` is the radius. For each evaluation frame at distance `n` and for each radius `r`, we save the percentage of correctly located objects.
 
 For running the evaluation on all videos, just run the following script:
 
@@ -214,6 +217,6 @@ year={2025}
 
 All files in this repository are copyright by us and published under the Creative Commons Attribution-NonCommerial 4.0 International License, found [here](http://en.wikipedia.org/wiki/Main_Page). This means that you must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. You may not use the material for commercial purposes.
 
-Research at Bristol is supported by EPSRC Fellowship UMPIRE (EP/T004991/1) and EPSRC Program Grant Visual AI (EP/T028572/1). We particularly thank Jitendra Malik for early discussions and insights on this work. We also thank members of the BAIR community for helpful discussions. This project acknowledges the use of University of Bristol’s Blue Crystal 4 (BC4) HPC facilities. 
 ## Acknowledgements
 
+Research at Bristol is supported by EPSRC Fellowship UMPIRE (EP/T004991/1) and EPSRC Program Grant Visual AI (EP/T028572/1). We particularly thank Jitendra Malik for early discussions and insights on this work. We also thank members of the BAIR community for helpful discussions. This project acknowledges the use of University of Bristol’s Blue Crystal 4 (BC4) HPC facilities.
