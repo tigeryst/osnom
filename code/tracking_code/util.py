@@ -10,7 +10,6 @@ from PIL import Image
 from scipy.optimize import linear_sum_assignment
 import cv2
 import torchvision.transforms as T
-from colordict import *
 from colordict import ColorDict
 from trimesh import path
 import os
@@ -55,7 +54,7 @@ rescale_scores = {
     'P18_05': 0.4780114723,
     'P27_103': None,
     'P01_109': None,
-    '22_15': None,
+    'P22_15': None,
     'P30_05': 0.6166178511,
     'P32_06': 0.3060069158,
     'P11_101': 0.8367080558,
