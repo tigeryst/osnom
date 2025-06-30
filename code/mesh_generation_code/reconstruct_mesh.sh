@@ -69,6 +69,5 @@ cp $DENSE3D_PATH/fused-minpix$minpix.ply.vis $DENSE3D_PATH/fused.ply.vis
 echo "colmap delaunay_mesher"
 $COLMAP_COMMAND delaunay_mesher \
     --input_path $DENSE3D_PATH \
-    --output_path $DENSE3D_PATH/fused-minpix$minpix-meshed-delaunay-qreg5.ply \
     --output_path $FINAL_MESH_PATH \
     --DelaunayMeshing.quality_regularization 5
