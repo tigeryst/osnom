@@ -5,7 +5,6 @@ import subprocess
 # Constants
 BASE_PATH = '.'
 OUTPUT_DIR = '.'
-EPIC_KITCHENS_PATH = './data/EPIC-KITCHENS/'
 
 # Videos List
 VIDEOS = ['P24_05',
@@ -118,6 +117,7 @@ VIDEOS = ['P24_05',
           'P06_102',
           'P01_01',
           'P35_105']
+FRAMES_PATH = os.path.join(BASE_PATH, "data", "images")
 
 # Command Template
 BASE_COMMAND = [
@@ -132,8 +132,8 @@ def get_full_command(video):
     return BASE_COMMAND + [
         "--data_path", os.path.join(BASE_PATH, "data/aggregated", video),
         "--mesh_path", os.path.join(BASE_PATH, "data/aggregated", video),
-        "--frames_path", os.path.join(EPIC_KITCHENS_PATH, first_number, "rgb_frames", video),
         "--kitchen", video,
+        "--frames_path", os.path.join(FRAMES_PATH, video),
     ]
 
 # Main Execution
