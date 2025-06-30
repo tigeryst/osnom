@@ -1,7 +1,7 @@
 import sys
-sys.path.append('./code/tracking_code')
-
 import os
+sys.path.append(os.path.join('.', 'code', 'tracking_code'))
+
 import subprocess
 import wandb
 from tracking.tracker import PHALP

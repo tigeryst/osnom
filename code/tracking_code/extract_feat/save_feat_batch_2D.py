@@ -1,5 +1,6 @@
 import sys
-sys.path.append('./code/tracking_code')
+import os
+sys.path.append(os.path.join(".", "code", "tracking_code"))
 import torch.nn as nn
 from util import *
 import pickle
@@ -7,7 +8,6 @@ import torch
 from tqdm import tqdm
 import argparse
 import json
-import os
 import cv2
 from PIL import Image
 

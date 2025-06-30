@@ -1,5 +1,6 @@
 import sys
-sys.path.append('./code/tracking_code')
+import os
+sys.path.append(os.path.join(".", "code", "tracking_code"))
 import torch.nn as nn
 from util import *
 import pickle
@@ -9,7 +10,6 @@ import numpy as np
 import torch
 from tqdm import tqdm
 import argparse
-import os
 from pathlib import Path
 import cv2
 import json
