@@ -4,7 +4,7 @@ This is the official resource for the 3DV 2025 paper "Spatial Cognition from Ego
 
 [**Project Webpage**](https://dimadamen.github.io/OSNOM/)
 
-<img src="resources/teaser.png" width="600">
+![key figure showing LMK framework](resources/teaser.png)
 
 ## Install the environment
 Please install the dependencies using 
@@ -174,7 +174,7 @@ Here is a description of the output:
 
 ### Evaluation Code
 
-We provide the code to compute PCL (Percentage of Correctly Located) results in <code>code/evaluation_code/evaluate.py</code>. The code takes the following inputs:
+We provide the code to compute PCL (Percentage of Correctly Located) results in `code/evaluation_code/evaluate.py`. The code takes the following inputs:
 
 ```python
 Args:
