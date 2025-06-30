@@ -29,7 +29,8 @@ For 3D reconstruction, we prepare data in a COLMAP-friendly format.
 #### Camera poses
 
 Download the sparse registered frames in COLMAP format computed by [Epic Fields](https://epic-kitchens.github.io/epic-fields/) from [here](https://www.dropbox.com/scl/fo/0wtphqqyp4fu6bd7dhbfs/h?rlkey=ju21graeixi6vpecrf7rqurpt&e=1&dl=0) into `data/colmap_models/sparse/` and structure files as:
-```
+
+```text
 data/colmap_models/sparse/
     ├── P01_01/
     │   ├── database.db
@@ -45,7 +46,9 @@ data/colmap_models/sparse/
     │       └── points3D.bin
     └── ...
 ```
+
 You may do so using:
+
 ```bash
 # $VIDEO_ID.zip -> unzips to folder with db and sparse/0/*
 mkdir -p data/colmap_models/sparse/
@@ -53,8 +56,8 @@ unzip ${VIDEO_ID}.zip -d data/colmap_models/sparse/$VIDEO_ID/
 ```
 
 Extract image frames to `data/aggregated/images/$VIDEO_ID/frame_XXXXXXX.jpg` from the downloaded videos to be in sync with the frame names/numbers in `images.bin` above, or directly download the image frames from the EPIC-KITCHENS dataset in this format using:
-```bash 
 #### Extracted Images
+```bash
 bash code/mesh_generation_code/download_images.sh $VIDEO_ID
 ```
 
@@ -81,9 +84,9 @@ You can find this at: [frame_mapping.json](https://data.bris.ac.uk/datasets/2v6c
 The directory structure for the dataset used in the provided command should look as follows:
 We use camera poses from the [EPIC-Fields dataset](https://epic-kitchens.github.io/epic-fields/). Dense camera poses annotations can be downloaded from the following link: [camera poses](https://www.dropbox.com/scl/fo/onqyany4ze39pknck49ir/AKTS2LUt3WxFd02z7GdLYqM?rlkey=fc8gb6dz1pi6r89b30ma43x3m&e=1&dl=0).
 
-```
 ### Final Data Structure
 
+```text
 ./data/aggregated/{VIDEO_ID}/
 │
 ├── poses.json                # Contains the camera poses
@@ -95,8 +98,8 @@ Where `{VIDEO_ID}` is the name of the specific video being processed, `poses.jso
 
 In addition, the path for frames is located at:
 
-```
 ./EPIC-KITCHENS/{participant}/rgb_frames/{VIDEO_ID}/
+```text
 │
 ├── frame_001.jpg             # RGB frames for each video frame
 ├── frame_002.jpg
@@ -114,10 +117,10 @@ We provide the code for extracting 2D and 3D features in `code/tracking_code/ext
 ```python
 python code/tracking_code/scripts/extract_feat_2D.py
 ```
+
 ```python
 python code/tracking_code/scripts/extract_feat_3D.py
 ```
-
 
 The output is a dictionary with the following format:
 
@@ -136,7 +139,8 @@ The output is a dictionary with the following format:
 ```
 The path where the 2D and 3D features are saved is as follows:
 
-```
+
+```bash
 ./saved_feat_2D/{video}/2D_feat_{video}.pkl
 ./saved_feat_3D/{video}/3D_feat_{video}.pkl
 ```
