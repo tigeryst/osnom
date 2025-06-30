@@ -10,18 +10,18 @@ echo $VIDEO_ID
 
 # Paths
 TEMP_TAR_DIR="data/EpicKitchens-100"
-IMAGES_DIR="data/aggregated/images"
+IMAGES_DIR="data/images"
 
 # Download data if token does not exist
 images_downloaded_token="$IMAGES_DIR/$VIDEO_ID.done"
 if [ ! -f "$images_downloaded_token" ]; then
     echo "Downloading images for $VIDEO_ID"
-    
+
     # video number os part after `_`
     vid_num=$(echo "$VIDEO_ID" | cut -d'_' -f2)
 
     # Does the tarball already exist?
-    person_id=$(echo "$VIDEO_ID" | cut -d'_' -f1)    # person id (pid) is the part before `_`
+    person_id=$(echo "$VIDEO_ID" | cut -d'_' -f1) # person id (pid) is the part before `_`
     tarball_dir="$TEMP_TAR_DIR/$person_id/rgb_frames/"
     tarball_path="$tarball_dir/$VIDEO_ID.tar"
     tarball_done_token="$VIDEO_ID.done"
