@@ -8,6 +8,11 @@ set -eu
 VIDEO_ID=$1
 echo $VIDEO_ID
 
+# Initialize conda in this shell session
+eval "$(conda shell.bash hook)"
+
+conda activate OSNOM
+
 # Paths
 OUTPUT_PATH = "results"
 DATA_PATH = "data/aggregated"
