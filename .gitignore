@@ -10,3 +10,6 @@ data/EpicFields/
 data/images/
 data/colmap_models/
 data/aggregated/
+
+# Large files
+data/frame_mapping.json

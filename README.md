@@ -121,6 +121,8 @@ In addition, frames must be located at:
 
 where `{participant}` and `{VIDEO_ID}` are specific to the video being processed.
 
+Finally, the VISOR frame mapping must be placed at `data/frame_mapping.json`.
+
 ### Feature Extraction
 
 We provide the code for extracting 2D and 3D features in `code/tracking_code/extract_feat`. You can run the scripts `save_feat_batch_2D.py` and `save_feat_batch_3D.py` for extracting them, using the following commands:
