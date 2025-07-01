@@ -1155,7 +1155,7 @@ def extract_values_from_json():
 
 def get_camera_poses(path, kitchen, rescale):
     c2w_list = {}
-    with open(path + '/poses.json', 'r') as f:
+    with open(os.path.join(path, 'poses.json'), 'r') as f:
         model = json.load(f)
     #
     images = np.concatenate([np.expand_dims(np.array(values), axis=0) for key, values in model['images'].items()],
@@ -1178,7 +1178,7 @@ def get_camera_poses(path, kitchen, rescale):
 
 def get_camera_poses_old_1(path):
     c2w_list = {}
-    with open(path + '/poses.json', 'r') as f:
+    with open(os.path.join(path, 'poses.json'), 'r') as f:
         model = json.load(f)
 
     for i in model['images'].keys():

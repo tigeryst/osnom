@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.join(".", "code", "tracking_code"))
+sys.path.append(os.path.join("code", "tracking_code"))
 import torch.nn as nn
 from util import *
 import pickle
@@ -302,7 +302,7 @@ class PHALP(nn.Module):
 
         # Load Depth-Anything model
         currdir = os.getcwd()
-        os.chdir(f'{path_to_depth_anything}/')
+        os.chdir(path_to_depth_anything)
         depth_anything = DepthAnything.from_pretrained(
             f'LiheYoung/depth_anything_{ENCODER}14'
         ).to(DEVICE).eval()
@@ -329,7 +329,7 @@ class PHALP(nn.Module):
         )
 
         # Import Zoedepth model for metric depth estimation
-        sys.path.append(f'{path_to_depth_anything}/metric_depth')
+        sys.path.append(os.path.join(path_to_depth_anything, 'metric_depth'))
         from zoedepth.models.builder import build_model
         from zoedepth.utils.config import get_config
 
@@ -344,7 +344,7 @@ class PHALP(nn.Module):
                     f.write(data)
 
         # Change directory for checkpoint downloads
-        os.chdir(f'{path_to_depth_anything}/metric_depth')
+        os.chdir(os.path.join(path_to_depth_anything, 'metric_depth'))
         Path('checkpoints').mkdir(exist_ok=True)
 
         # Download pre-trained models
@@ -393,6 +393,7 @@ class PHALP(nn.Module):
 
         # Load frame mapping data
         with open('./data/dense_frame_mapping_corrected.json') as f:
+        with open(os.path.join('data', 'dense_frame_mapping_corrected.json')) as f:
             self.mapping_dense = json.load(f)
 
         # Process bounding boxes and segmentations

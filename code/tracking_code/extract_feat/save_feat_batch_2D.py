@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.join(".", "code", "tracking_code"))
+sys.path.append(os.path.join("code", "tracking_code"))
 import torch.nn as nn
 from util import *
 import pickle
