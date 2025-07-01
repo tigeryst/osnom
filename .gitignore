@@ -1,0 +1,12 @@
+# macOS system files
+.DS_STORE
+
+# Temporary directories
+data/EpicKitchens-100/
+data/EpicKitchens-VISOR/
+data/EpicFields/
+
+# Data and output directories
+data/images/
+data/colmap_models/
+data/aggregated/
