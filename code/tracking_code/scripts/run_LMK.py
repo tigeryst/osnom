@@ -79,7 +79,7 @@ def get_sweep_config(video):
 
 def main():
     parser = argparse.ArgumentParser(description="Your script description")
-    parser.add_argument("video", required=True, help="Video ID")
+    parser.add_argument("video", help="Video ID")
 
     args = parser.parse_args()
 
