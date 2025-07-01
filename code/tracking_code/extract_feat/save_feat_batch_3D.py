@@ -2,7 +2,14 @@ import sys
 import os
 sys.path.append(os.path.join("code", "tracking_code"))
 import torch.nn as nn
-from util import *
+from util import (
+    get_colors,
+    read_data_1,
+    get_object_bbs_seg,
+    get_camera_pose_1,
+    extract_3d_features,
+    get_depth_shared
+)
 import pickle
 import pyrender
 import trimesh

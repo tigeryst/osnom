@@ -2,7 +2,13 @@ import sys
 import os
 sys.path.append(os.path.join("code", "tracking_code"))
 import torch.nn as nn
-from util import *
+from util import (
+    get_colors,
+    read_data_all,
+    get_object_bbs_new,
+    extract_dino_features_batch
+)
+import torchvision.transforms as T
 import pickle
 import torch
 from tqdm import tqdm
