@@ -6,11 +6,19 @@ This is the official resource for the 3DV 2025 paper "Spatial Cognition from Ego
 
 ![key figure showing LMK framework](resources/teaser.png)
 
-## Install the environment
+## Installation
 
-Please install the dependencies using
+Please install the dependencies using:
 
 `conda env create --name OSNOM --file environment.yml`
+
+The scripts also assume that you have [Depth-Anything](https://github.com/LiheYoung/Depth-Anything) cloned in the same parent directory as this repository.
+
+```text
+../
+    ├── OSNOM/
+    ├── Depth-Anything/
+```
 
 ## Data Preparation
 

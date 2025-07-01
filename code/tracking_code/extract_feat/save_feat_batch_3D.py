@@ -140,7 +140,7 @@ class PHALP(nn.Module):
         super(PHALP, self).__init__()
 
         # Add Depth-Anything path to system path
-        path_to_depth_anything = 'Depth-Anything'
+        path_to_depth_anything = os.path.join("..", 'Depth-Anything')
         sys.path.append(path_to_depth_anything)
 
         # Import Depth-Anything model and utilities
