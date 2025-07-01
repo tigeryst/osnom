@@ -140,7 +140,7 @@ class PHALP(nn.Module):
         super(PHALP, self).__init__()
 
         # Add Depth-Anything path to system path
-        path_to_depth_anything = './Depth-Anything'
+        path_to_depth_anything = 'Depth-Anything'
         sys.path.append(path_to_depth_anything)
 
         # Import Depth-Anything model and utilities
@@ -220,11 +220,9 @@ class PHALP(nn.Module):
 
         # Initialize paths and directories
         self.RGB_tuples = get_colors()
-        self.path_to_save = output_dir
         self.kitchen = kitchen
         self.mesh_path = mesh_path
-        self.output_dir_name = f"saved_feat_3D/{self.kitchen}"
-        self.path_to_save = os.path.join(self.path_to_save, self.output_dir_name)
+        self.path_to_save = os.path.join(output_dir, "saved_feat_3D", self.kitchen)
 
         # Create output directory if it doesn't exist
         if not os.path.exists(self.path_to_save):
@@ -242,7 +240,6 @@ class PHALP(nn.Module):
                                                                     '', kitchen, True)
 
         # Load frame mapping data
-        with open('./data/dense_frame_mapping_corrected.json') as f:
         with open(os.path.join('data', 'dense_frame_mapping_corrected.json')) as f:
             self.mapping_dense = json.load(f)
 

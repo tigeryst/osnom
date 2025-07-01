@@ -35,10 +35,8 @@ class PHALP(nn.Module):
 
         # Initialize class attributes
         self.RGB_tuples = get_colors()  # Predefined RGB tuples for visualization
-        self.path_to_save = output_dir
         self.kitchen = kitchen
-        self.output_dir_name = f"saved_feat_2D/{self.kitchen}"
-        self.path_to_save = os.path.join(self.path_to_save, self.output_dir_name)
+        self.path_to_save = os.path.join(output_dir, "saved_feat_2D", self.kitchen)
 
         # Create the output directory if it does not exist
         if not os.path.exists(self.path_to_save):

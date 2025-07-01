@@ -36,22 +36,20 @@ class PHALP(nn.Module):
         wb.name = f"output_{wandb.config.distance_type}_a{wandb.config.alpha}_h{wandb.config.hungarian_th}_pl{wandb.config.past_lookback}_agg{wandb.config.aggregation}_{wandb.config.model}_{wandb.config.kitchen}_beta0{wandb.config.beta_0}_beta1{wandb.config.beta_1}"
         self.cfg = wb.config
         self.save_res = self.cfg.save_res
-        self.path_to_save = os.path.join(self.cfg.output_dir, self.cfg.dir_name, "tune_output")
+        self.kitchen = self.cfg.kitchen
+        self.path_to_save = os.path.join(self.cfg.output_dir, "track", self.kitchen)
         os.makedirs(self.path_to_save, exist_ok=True)
         self.RGB_tuples = get_colors()
-        self.kitchen = self.cfg.kitchen
-        self.base_path = self.cfg.base_path
-        participant = self.kitchen.split('_')[0]
 
-        self.data_path = f"{self.base_path}/data/aggregated/{self.cfg.kitchen}/"
-        self.frames_path = f"{self.base_path}/data/images/{self.cfg.kitchen}/"
+        self.data_path = os.path.join(self.cfg.data_path, self.cfg.kitchen)
+        self.frames_path = os.path.join(self.cfg.frames_path, self.cfg.kitchen)
         with open(os.path.join(self.data_path, 'poses.json'), 'r') as f:
             self.poses = json.load(f)
         self.masks, _, self.camera_poses, self.frames, _ = read_data_1(self.data_path, '', self.cfg.kitchen, True)
 
-        with open(f"{self.base_path}/saved_feat_3D/{self.cfg.kitchen}/3D_feat_{self.cfg.kitchen}.pkl", 'rb') as file:
+        with open(os.path.join(self.cfg.output_dir, 'saved_feat_3D', self.cfg.kitchen, f"3D_feat_{self.cfg.kitchen}.pkl"), 'rb') as file:
             self.all_loca = pickle.load(file)
-        with open(f"{self.base_path}/saved_feat_2D/{self.cfg.kitchen}/2D_feat_{self.cfg.kitchen}.pkl", 'rb') as file:
+        with open(os.path.join(self.cfg.output_dir, 'saved_feat_2D', self.cfg.kitchen, f"2D_feat_{self.cfg.kitchen}.pkl"), 'rb') as file:
             self.all_feat = pickle.load(file)
 
         self.bbs_dict = get_object_bbs_seg(self.masks['video_annotations'])

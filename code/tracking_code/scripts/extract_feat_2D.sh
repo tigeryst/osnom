@@ -1,0 +1,20 @@
+#! /bin/bash
+
+# Usage: ./code/tracking_code/scripts/extract_feat_2D.sh <video_id>
+
+# Exit on error or unset variable
+set -eu
+
+VIDEO_ID=$1
+echo $VIDEO_ID
+
+# Paths
+OUTPUT_PATH = "results"
+DATA_PATH = "data/aggregated"
+FRAMES_PATH = "data/images"
+
+python code/tracking_code/extract_feat/save_feat_batch_2D.py \
+    --output_dir "$OUTPUT_PATH" \
+    --data_path "$DATA_PATH/$VIDEO_ID" \
+    --frames_path "$FRAMES_PATH/$VIDEO_ID" \
+    --kitchen "$VIDEO_ID"
