@@ -14,9 +14,9 @@ eval "$(conda shell.bash hook)"
 conda activate OSNOM
 
 # Paths
-OUTPUT_PATH = "results"
-DATA_PATH = "data/aggregated"
-FRAMES_PATH = "data/images"
+OUTPUT_PATH="results"
+DATA_PATH="data/aggregated"
+FRAMES_PATH="data/images"
 
 python code/tracking_code/extract_feat/save_feat_batch_2D.py \
     --output_dir "$OUTPUT_PATH" \
