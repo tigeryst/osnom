@@ -7,7 +7,6 @@ import pyrender
 import torch
 import scipy.stats as stats
 from PIL import Image
-from scipy.optimize import linear_sum_assignment
 import cv2
 import torchvision.transforms as T
 from colordict import ColorDict

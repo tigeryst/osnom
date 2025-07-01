@@ -1,4 +1,3 @@
-import sys
 import math
 from tqdm import tqdm
 import pandas as pd
