@@ -21,7 +21,7 @@ The videos used for OSNOM evaluation come from the EPIC-KITCHENS-100 Dataset. Th
 - **Download EK-55 Videos**: [EK-55 Dataset](http://dx.doi.org/10.5523/bris.2g1n6qdydwa9u22shpxqzp0t8m)
 - **Download EK-100 Videos**: [EK-100 Dataset](http://dx.doi.org/10.5523/bris.3h91syskeag572hl6tvuovwv4d)
 
-For testing, we used 100 videos, and for validation, we used 10 videos. You can find the list of these videos in `data/video_splits.txt`.
+For testing, we used 100 videos, and for validation, we used 10 videos. You can find the list of these videos in `data/video_splits.json`.
 
 ### 3D mesh reconstruction
 
@@ -75,7 +75,7 @@ bash code/mesh_generation_code/reconstruct_mesh.sh $VIDEO_ID
 
 ### Scaling Scores
 
-The mesh of each video has different scales. We rescale each kitchen using cupboards as the standard unit, which is 60 cm (or 24 inches). The scores for rescaling each kitchen are provided in the file `data/scaling_scores_dict.txt`.
+The mesh of each video has different scales. We rescale each kitchen using cupboards as the standard unit, which is 60 cm (or 24 inches). The scores for rescaling each kitchen are provided in the file `data/scaling_scores_dict.json`.
 
 ### 2D Object Masks
 
