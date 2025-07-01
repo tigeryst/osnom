@@ -127,12 +127,12 @@ Finally, the VISOR frame mapping must be placed at `data/frame_mapping.json`.
 
 We provide the code for extracting 2D and 3D features in `code/tracking_code/extract_feat`. You can run the scripts `save_feat_batch_2D.py` and `save_feat_batch_3D.py` for extracting them, using the following commands:
 
-```python
-python code/tracking_code/scripts/extract_feat_2D.py
+```bash
+./code/tracking_code/scripts/extract_feat_2D.sh {VIDEO_ID}
 ```
 
-```python
-python code/tracking_code/scripts/extract_feat_3D.py
+```bash
+./code/tracking_code/scripts/extract_feat_3D.py {VIDEO_ID}
 ```
 
 The output is a dictionary with the following format:
@@ -154,15 +154,15 @@ The output is a dictionary with the following format:
 The paths where the 2D and 3D features are saved are as follows:
 
 ```bash
-./saved_feat_2D/{video}/2D_feat_{video}.pkl
-./saved_feat_3D/{video}/3D_feat_{video}.pkl
+./results/saved_feat_2D/{VIDEO_ID}/2D_feat_{VIDEO_ID}.pkl
+./results/saved_feat_3D/{VIDEO_ID}/3D_feat_{VIDEO_ID}.pkl
 ```
 
 ## Code
 
 ### Tracking Code
 
-We provide the code for tracking objects in `code/tracking_code/`. You can run the script `code/tracking_code/scripts/run_tracker.sh` for tracking. The output is a dictionary with the following format:
+We provide the code for tracking objects in `code/tracking_code/`. You can run the script `python code/tracking_code/scripts/run_LMK.py {VIDEO_ID}` for tracking. The output is a dictionary with the following format:
 
 ```python
 results = {
