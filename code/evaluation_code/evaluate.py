@@ -240,19 +240,17 @@ def list_all_frames(directory_path):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--results_path', type=str, required=True, help='Path to results file')
-    parser.add_argument('--frames_path', type=str, required=True, help='Path to directory')
-    parser.add_argument('--data_path', type=str, required=True, help='Path to data')
-    parser.add_argument('--kitchen', type=str, required=True, help='Path to data')
-    parser.add_argument('--video', type=str, required=True, help='Path to data')
-    parser.add_argument('--output_dir', type=str, required=True, help='Path to data')
-    parser.add_argument('--name_prefix', type=str, required=True, help='Path to data')
+    parser = argparse.ArgumentParser(description="Evaluate tracking results")
+    parser.add_argument('--results_path', type=str, required=True, help='Tracking results.pkl path')
+    parser.add_argument('--frames_path', type=str, required=True, help='RGB frames directory path')
+    parser.add_argument('--video_info_path', type=str, required=True, help='EPIC_100_video_info.csv path')
+    parser.add_argument('--kitchen', type=str, required=True, help='Video ID')
+    parser.add_argument('--output_path', type=str, required=True, help='Output file path')
 
-    print('parse args...')
     args = parser.parse_args()
-    df = pd.read_csv(os.path.join('data', 'EPIC_100_video_info.csv'))
-    fps = int(df[df['video_id'] == args.kitchen + '_' + args.video]['fps'])
+    
+    df = pd.read_csv(args.data_path)
+    fps = int(df[df['video_id'] == args.kitchen]['fps'])
     fps = 60 if fps == 59 else fps
 
 
@@ -260,9 +258,9 @@ def main():
     N = [fps * 5 * i for i in range(144)]
     results_grid = {}
 
-    print('load results...')
+    print('Load results...')
     results = load_results(args.results_path)
-    print('results loaded...')
+    print('Results loaded...')
 
     all_frames = list_all_frames(args.frames_path)
 
@@ -285,8 +283,8 @@ def main():
             )
             results_grid[n][r] = percentage
             
-    os.makedirs(args.output_dir, exist_ok=True)
-    with open(os.path.join(args.output_dir, 'results.pkl'), 'wb') as f:
+    os.makedirs(os.path.dirname(args.output_path), exist_ok=True)
+    with open(args.output_path, 'wb') as f:
         pickle.dump(results_grid, f)
                     
 if __name__ == "__main__":
