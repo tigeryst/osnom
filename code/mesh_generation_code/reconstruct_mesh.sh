@@ -11,7 +11,7 @@ echo $VIDEO_ID
 # Paths
 IMAGE_PATH="data/images/$VIDEO_ID"
 CAMERAS_PATH="data/colmap_models/sparse/$VIDEO_ID/sparse/0"
-DENSE3D_PATH="data/colmap_models/dense3D/$VIDEO_ID/"
+DENSE3D_PATH="data/colmap_models/dense3D/$VIDEO_ID"
 
 mkdir -p $DENSE3D_PATH
 
