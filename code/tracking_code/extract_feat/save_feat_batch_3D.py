@@ -118,22 +118,14 @@ class PHALP(nn.Module):
     """
     PHALP class is responsible for processing 3D object feature extraction using depth estimation.
     It handles loading and running models for depth prediction and feature extraction.
-
-    Attributes:
-        output_dir (str): Directory to save extracted features.
-        data_path (str): Path to dataset containing poses, masks, and annotations.
-        mesh_path (str): Path to 3D mesh data.
-        frames_path (str): Directory for video frames.
-        kitchen (str): Identifier for the specific kitchen or dataset instance.
     """
-    def __init__(self, output_dir, data_path, mesh_path, frames_path, kitchen):
+    def __init__(self, output_path, data_path, frames_path, kitchen):
         """
         Initializes the PHALP class, loads models for depth estimation, and prepares paths for data processing.
 
         Args:
-            output_dir (str): Directory to save extracted features.
-            data_path (str): Path to dataset containing poses, masks, and annotations.
-            mesh_path (str): Path to 3D mesh data.
+            output_path (str): File path to save extracted features.
+            data_path (str): Path to dataset containing poses, masks, and 3D mesh.
             frames_path (str): Directory for video frames.
             kitchen (str): Identifier for the specific kitchen or dataset instance.
         """
@@ -221,12 +213,7 @@ class PHALP(nn.Module):
         # Initialize paths and directories
         self.RGB_tuples = get_colors()
         self.kitchen = kitchen
-        self.mesh_path = mesh_path
-        self.path_to_save = os.path.join(output_dir, "saved_feat_3D", self.kitchen)
-
-        # Create output directory if it doesn't exist
-        if not os.path.exists(self.path_to_save):
-            os.makedirs(self.path_to_save)
+        self.path_to_save = output_path
 
         self.data_path = data_path
         self.frames_path = frames_path
@@ -346,23 +333,25 @@ class PHALP(nn.Module):
                 features_3d = loca_features[:, :3]
                 save_dict[frame_name] = (features_3d.cpu().numpy(), r3d_objs.cpu().numpy(), objs)
 
+        # Create the output directory if it does not exist
+        os.makedirs(os.path.dirname(self.path_to_save), exist_ok=True)
+
         # Save the extracted 3D features to disk
-        with open(os.path.join(self.path_to_save, f'3D_feat_{self.kitchen}.pkl'), 'wb') as f:
+        with open(self.path_to_save, 'wb') as f:
             pickle.dump(save_dict, f)
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Your script description")
-    parser.add_argument("--output_dir", required=True, help="Output directory path")
-    parser.add_argument("--data_path", required=True, help="Data path")
-    parser.add_argument("--mesh_path", required=True, help="Data path")
-    parser.add_argument("--frames_path", required=True, help="Frames path")
-    parser.add_argument("--kitchen", required=True, help="Frames path")
+    parser = argparse.ArgumentParser(description="Extract 3D features")
+    parser.add_argument("--output_path", required=True, help="Output file path")
+    parser.add_argument("--data_path", required=True, help="Data directory path containing poses, masks, and mesh")
+    parser.add_argument("--frames_path", required=True, help="RGB frames directory path")
+    parser.add_argument("--kitchen", required=True, help="Video ID")
 
     args = parser.parse_args()
 
     # Initialize your class with the configuration file argument
-    phalp_instance = PHALP(args.output_dir, args.data_path, args.mesh_path, args.frames_path,
+    phalp_instance = PHALP(args.output_path, args.data_path, args.frames_path,
                            args.kitchen)
     phalp_instance.track()
 

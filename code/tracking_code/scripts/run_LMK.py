@@ -8,11 +8,6 @@ import wandb
 from tracking.tracker import PHALP
 import argparse
 
-# Base Paths
-DATA_PATH = os.path.join("data", "aggregated")
-FRAMES_PATH = os.path.join("data", "images")
-RESULTS_PATH = "results"
-
 # Parameters
 
 # Weight assigned to appearance features in the model.
@@ -31,7 +26,7 @@ HUNGARIAN_TH = 10
 DISTANCE_TYPE = 'AL'
 
 # Helper Functions
-def get_sweep_config(video):
+def get_sweep_config(video_id):
     return {
         "method": "grid",
         "parameters": {
@@ -42,10 +37,12 @@ def get_sweep_config(video):
             "beta_1": {"values": [BETA_1]},
             "beta_2": {"values": [1.0]},
             "beta_3": {"values": [1.0]},
-            "output_dir": {"values": [RESULTS_PATH]},
-            "data_path": {"values": [DATA_PATH]},
-            "frames_path": {"values": [FRAMES_PATH]},
-            "kitchen": {"values": [video]},
+            "output_path": {"values": [os.path.join("results", video_id, "track")]},
+            "data_path": {"values": [os.path.join("data", "aggregated", video_id)]},
+            "feat_path_2d": {"values": [os.path.join("results", video_id, "feat", "2D_feat.pkl")]},
+            "feat_path_3d": {"values": [os.path.join("results", video_id, "feat", "3D_feat.pkl")]},
+            "frames_path": {"values": [os.path.join("data", "images", video_id)]},
+            "kitchen": {"values": [video_id]},
             "use_unproj": {"values": [False]},
             "visualize": {"values": [False]},
             "save_res": {"values": [True]},
@@ -78,13 +75,13 @@ def get_sweep_config(video):
     }
 
 def main():
-    parser = argparse.ArgumentParser(description="Your script description")
-    parser.add_argument("video", help="Video ID")
+    parser = argparse.ArgumentParser(description="LMK tracking")
+    parser.add_argument("video_id", help="Video ID")
 
     args = parser.parse_args()
 
     wandb.login()
-    sweep_config = get_sweep_config(args.video)
+    sweep_config = get_sweep_config(args.video_id)
     sweep_id = wandb.sweep(sweep_config, project="tuning")
 
     phalp = PHALP()

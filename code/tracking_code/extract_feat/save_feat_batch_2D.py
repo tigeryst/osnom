@@ -23,24 +23,23 @@ os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 class PHALP(nn.Module):
     """
     PHALP: A class for object tracking and appearance feature extraction using DINOv2.
-
-    Attributes:
-        output_dir (str): Path to save extracted features.
-        data_path (str): Path to the dataset containing poses and masks.
-        frames_path (str): Path to the folder containing video frames.
-        kitchen (str): Identifier for the specific kitchen or dataset instance.
     """
-    def __init__(self, output_dir, data_path, frames_path, kitchen):
+    def __init__(self, output_path, data_path, frames_path, kitchen):
+        """
+        Initializes the PHALP class.
+        
+        Args:
+            output_path (str): File path to save extracted features.
+            data_path (str): Path to the dataset containing poses and masks.
+            frames_path (str): Path to the folder containing video frames.
+            kitchen (str): Identifier for the specific kitchen or dataset instance.
+        """
         super(PHALP, self).__init__()
 
         # Initialize class attributes
         self.RGB_tuples = get_colors()  # Predefined RGB tuples for visualization
         self.kitchen = kitchen
-        self.path_to_save = os.path.join(output_dir, "saved_feat_2D", self.kitchen)
-
-        # Create the output directory if it does not exist
-        if not os.path.exists(self.path_to_save):
-            os.makedirs(self.path_to_save)
+        self.path_to_save = output_path
 
         self.data_path = data_path
         self.frames_path = frames_path
@@ -165,22 +164,25 @@ class PHALP(nn.Module):
                     save_dict_2D[s] = appe_features[j:j + frame_names.count(s)].cpu().numpy()
                     j += frame_names.count(s)
 
-        # Save the extracted features and metadata to a file
-        with open(os.path.join(self.path_to_save, f"2D_feat_{self.kitchen}.pkl"), 'wb') as f:
+        # Create the output directory if it does not exist
+        os.makedirs(os.path.dirname(self.path_to_save), exist_ok=True)
+
+        # Save the extracted 2D features to disk
+        with open(self.path_to_save, 'wb') as f:
             pickle.dump(save_dict_2D, f)
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Your script description")
-    parser.add_argument("--output_dir", required=True, help="Output directory path")
-    parser.add_argument("--data_path", required=True, help="Data path")
-    parser.add_argument("--frames_path", required=True, help="Frames path")
-    parser.add_argument("--kitchen", required=True, help="Frames path")
+    parser = argparse.ArgumentParser(description="Extract 2D features")
+    parser.add_argument("--output_path", required=True, help="Output file path")
+    parser.add_argument("--data_path", required=True, help="Data directory path containing poses and masks")
+    parser.add_argument("--frames_path", required=True, help="RGB frames directory path")
+    parser.add_argument("--kitchen", required=True, help="Video ID")
 
     args = parser.parse_args()
 
     # Initialize your class with the configuration file argument
-    phalp_instance = PHALP(args.output_dir, args.data_path, args.frames_path,
+    phalp_instance = PHALP(args.output_path, args.data_path, args.frames_path,
                            args.kitchen)
     phalp_instance.track()
 

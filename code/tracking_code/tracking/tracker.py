@@ -37,19 +37,20 @@ class PHALP(nn.Module):
         self.cfg = wb.config
         self.save_res = self.cfg.save_res
         self.kitchen = self.cfg.kitchen
-        self.path_to_save = os.path.join(self.cfg.output_dir, "track", self.kitchen)
+        self.path_to_save = self.cfg.output_path
         os.makedirs(self.path_to_save, exist_ok=True)
         self.RGB_tuples = get_colors()
 
-        self.data_path = os.path.join(self.cfg.data_path, self.cfg.kitchen)
-        self.frames_path = os.path.join(self.cfg.frames_path, self.cfg.kitchen)
+        self.data_path = self.cfg.data_path
+        self.frames_path = self.cfg.frames_path
+
         with open(os.path.join(self.data_path, 'poses.json'), 'r') as f:
             self.poses = json.load(f)
         self.masks, _, self.camera_poses, self.frames, _ = read_data_1(self.data_path, self.cfg.kitchen, True)
 
-        with open(os.path.join(self.cfg.output_dir, 'saved_feat_3D', self.cfg.kitchen, f"3D_feat_{self.cfg.kitchen}.pkl"), 'rb') as file:
+        with open(self.cfg.feat_path_3d, 'rb') as file:
             self.all_loca = pickle.load(file)
-        with open(os.path.join(self.cfg.output_dir, 'saved_feat_2D', self.cfg.kitchen, f"2D_feat_{self.cfg.kitchen}.pkl"), 'rb') as file:
+        with open(self.cfg.feat_path_2d, 'rb') as file:
             self.all_feat = pickle.load(file)
 
         self.bbs_dict = get_object_bbs_seg(self.masks['video_annotations'])

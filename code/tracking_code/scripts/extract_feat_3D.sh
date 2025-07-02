@@ -13,14 +13,8 @@ eval "$(conda shell.bash hook)"
 
 conda activate OSNOM
 
-# Paths
-OUTPUT_PATH="results"
-DATA_PATH="data/aggregated"
-FRAMES_PATH="data/images"
-
 python code/tracking_code/extract_feat/save_feat_batch_3D.py \
-    --output_dir "$OUTPUT_PATH" \
-    --data_path "$DATA_PATH/$VIDEO_ID" \
-    --mesh_path "$DATA_PATH/$VIDEO_ID" \
-    --frames_path "$FRAMES_PATH/$VIDEO_ID" \
+    --output_dir "results/$VIDEO_ID/feat/3D_feat.pkl" \
+    --data_path "data/aggregated/$VIDEO_ID" \
+    --frames_path "data/images/$VIDEO_ID" \
     --kitchen "$VIDEO_ID"
