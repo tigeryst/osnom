@@ -249,7 +249,7 @@ def main():
 
     args = parser.parse_args()
     
-    df = pd.read_csv(args.data_path)
+    df = pd.read_csv(args.video_info_path)
     fps = int(df[df['video_id'] == args.kitchen]['fps'])
     fps = 60 if fps == 59 else fps
 
