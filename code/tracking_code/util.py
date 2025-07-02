@@ -1014,7 +1014,7 @@ def get_camera_poses_old_1(path):
 
     return c2w_list
 
-def read_data_1(data_path, path_align, kitchen, rescale):
+def read_data_1(data_path, kitchen, rescale):
     path_interpolations = os.path.join(data_path, 'mask_annotations.json')
     file = open(path_interpolations)
     masks = json.load(file)

@@ -237,7 +237,7 @@ class PHALP(nn.Module):
 
         # Read other necessary data
         self.masks, _, self.camera_poses, self.frames, _ = read_data_1(self.data_path, 
-                                                                    '', kitchen, True)
+                                                                    kitchen, True)
 
         # Load frame mapping data
         with open(os.path.join('data', 'frame_mapping.json')) as f:
