@@ -126,14 +126,14 @@ class PHALP(nn.Module):
                     final_visuals_dic[frame_name]['loca'].append(track_data_hist['loca'])
                     final_visuals_dic[frame_name]['radius'].append(track_data_hist['radius'])
 
-            if self.cfg.visualize and final_visuals_dic[frame_name]['tracked_ids']:
-                cv_image = cv2.imread(os.path.join(self.frames_path, f"{frame_name}.jpg"))
-                cv_image = cv2.resize(cv_image, (854, 480))
-                cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
-                for bbox, tr_id in zip(final_visuals_dic[frame_name]['tracked_bbox'], final_visuals_dic[frame_name]['tracked_ids']):
-                    cv_image = visualize_mask(cv_image, None, bbox, color=np.array(self.RGB_tuples[tr_id]), text=f"track id: {tr_id}")
-                img = Image.fromarray(cv_image)
-                img.save(os.path.join(self.path_to_save, f"{frame_name}.jpg"))
-
-            else:
-                print('No detections')
+            if self.cfg.visualize:
+                if final_visuals_dic[frame_name]['tracked_ids']:
+                    cv_image = cv2.imread(os.path.join(self.frames_path, f"{frame_name}.jpg"))
+                    cv_image = cv2.resize(cv_image, (854, 480))
+                    cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+                    for bbox, tr_id in zip(final_visuals_dic[frame_name]['tracked_bbox'], final_visuals_dic[frame_name]['tracked_ids']):
+                        cv_image = visualize_mask(cv_image, None, bbox, color=np.array(self.RGB_tuples[tr_id]), text=f"track id: {tr_id}")
+                    img = Image.fromarray(cv_image)
+                    img.save(os.path.join(self.path_to_save, f"{frame_name}.jpg"))
+                else:
+                    print('No detections')
