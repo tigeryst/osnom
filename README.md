@@ -204,11 +204,7 @@ The output is a dictionary with the following format:
 
 where `n` represents the distance in frames from the evaluation frame, and `r` is the radius. For each evaluation frame at distance `n` and for each radius `r`, we save the percentage of correctly located objects.
 
-For running the evaluation on all videos, just run the following script:
-
-```python
-python code/evaluation_code/scripts/run_eval.py
-```
+For running the evaluation, use `./code/evaluation_code/scripts/run_eval.sh {VIDEO_ID}`
 
 ## BibTeX
 

@@ -13,3 +13,5 @@ data/aggregated/
 
 # Large files
 data/frame_mapping.json
+
+results/
