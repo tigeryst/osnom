@@ -254,8 +254,7 @@ class PHALP(nn.Module):
         save_dict = {}  # Dictionary to store extracted 3D features
 
         # Load the 3D mesh for the kitchen
-        mesh_path = os.path.join(self.mesh_path, 'fused-minpix15-meshed-delaunay-qreg5.ply')
-        mesh = trimesh.load(mesh_path, force='mesh')
+        mesh = trimesh.load(os.path.join(self.data_path, 'fused-minpix15-meshed-delaunay-qreg5.ply'), force='mesh')
         mesh.apply_scale(rescale_scores[self.kitchen])
 
         # Camera parameters: size and focal length
