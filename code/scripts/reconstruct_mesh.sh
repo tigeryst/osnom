@@ -1,17 +1,20 @@
-#! /bin/bash
+#!/bin/bash
 
-# Usage: ./code/mesh_generation_code/reconstruct_mesh.sh <video_id>
+# Usage: ./code/scripts/reconstruct_mesh.sh <video_id> [--data-root <path>]
 
-# Exit on error or unset variable
 set -eu
 
-VIDEO_ID=$1
-echo $VIDEO_ID
+# Parse arguments
+source ./code/scripts/common/parse_args.sh "$@"
+parse_video_args "$@"
+
+echo "Reconstructing mesh: $VIDEO_ID"
+echo "Using data root: $DATA_ROOT"
 
 # Paths
-IMAGE_PATH="data/images/$VIDEO_ID"
-CAMERAS_PATH="data/colmap_models/sparse/$VIDEO_ID/sparse/0"
-DENSE3D_PATH="data/colmap_models/dense3D/$VIDEO_ID"
+IMAGE_PATH="$DATA_ROOT/images/$VIDEO_ID"
+CAMERAS_PATH="$DATA_ROOT/colmap_models/sparse/$VIDEO_ID/sparse/0"
+DENSE3D_PATH="$DATA_ROOT/colmap_models/dense3D/$VIDEO_ID"
 
 mkdir -p $DENSE3D_PATH
 

@@ -1,4 +1,4 @@
-# Usage: python code/tracking_code/scripts/run_LMK.py <video_id>
+# Usage: python code/tracking_code/scripts/run_lmk.py <video_id> [--data-root <path>]
 
 import sys
 import os
@@ -26,7 +26,7 @@ HUNGARIAN_TH = 10
 DISTANCE_TYPE = 'AL'
 
 # Helper Functions
-def get_sweep_config(video_id):
+def get_sweep_config(video_id, data_root):
     return {
         "method": "grid",
         "parameters": {
@@ -38,10 +38,10 @@ def get_sweep_config(video_id):
             "beta_2": {"values": [1.0]},
             "beta_3": {"values": [1.0]},
             "output_path": {"values": [os.path.join("results", video_id, "track")]},
-            "data_path": {"values": [os.path.join("data", "aggregated", video_id)]},
+            "data_path": {"values": [os.path.join(data_root, "aggregated", video_id)]},
             "feat_path_2d": {"values": [os.path.join("results", video_id, "feat", "2D_feat.pkl")]},
             "feat_path_3d": {"values": [os.path.join("results", video_id, "feat", "3D_feat.pkl")]},
-            "frames_path": {"values": [os.path.join("data", "images", video_id)]},
+            "frames_path": {"values": [os.path.join(data_root, "images", video_id)]},
             "kitchen": {"values": [video_id]},
             "use_unproj": {"values": [False]},
             "visualize": {"values": [False]},
@@ -77,11 +77,19 @@ def get_sweep_config(video_id):
 def main():
     parser = argparse.ArgumentParser(description="LMK tracking")
     parser.add_argument("video_id", help="Video ID")
+    parser.add_argument(
+        "--data-root",
+        default="data",
+        help="Data root directory path (default: data)",
+    )
 
     args = parser.parse_args()
 
+    print(f"Tracking: {args.video_id}")
+    print(f"Using data root: {args.data_root}")
+
     wandb.login()
-    sweep_config = get_sweep_config(args.video_id)
+    sweep_config = get_sweep_config(args.video_id, args.data_root)
     sweep_id = wandb.sweep(sweep_config, project="tuning")
 
     phalp = PHALP()

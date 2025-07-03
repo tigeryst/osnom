@@ -1,16 +1,19 @@
-#! /bin/bash
+#!/bin/bash
 
-# Usage: ./code/mesh_generation_code/download_images.sh <video_id>
+# Usage: ./code/scripts/download_images.sh <video_id> [--data-root <path>]
 
-# Exit on error or unset variable
 set -eu
 
-VIDEO_ID=$1
-echo $VIDEO_ID
+# Parse arguments
+source ./code/scripts/common/parse_args.sh "$@"
+parse_video_args "$@"
+
+echo "Downloading video: $VIDEO_ID"
+echo "Using data root: $DATA_ROOT"
 
 # Paths
-TEMP_TAR_DIR="data/EpicKitchens-100"
-IMAGES_DIR="data/images"
+TEMP_TAR_DIR="$DATA_ROOT/EpicKitchens-100"
+IMAGES_DIR="$DATA_ROOT/images"
 
 # Download data if token does not exist
 images_downloaded_token="$IMAGES_DIR/$VIDEO_ID.done"
