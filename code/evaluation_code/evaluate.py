@@ -254,8 +254,8 @@ def main():
     fps = 60 if fps == 59 else fps
 
 
-    R = [1]
-    N = [fps * 5 * i for i in range(144)]
+    R = [0.3, 0.6, 0.9] # list of distance thresholds in meters
+    N = [fps * 5 * i for i in range(144)] # 5 seconds intervals, up to 12 minutes (144*5 seconds)
     results_grid = {}
 
     print('Load results...')
