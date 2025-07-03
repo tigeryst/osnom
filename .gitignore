@@ -1,5 +1,5 @@
 # macOS system files
-.DS_STORE
+**/.DS_Store
 
 # Temporary directories
 data/EpicKitchens-100/
