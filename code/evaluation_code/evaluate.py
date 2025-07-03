@@ -250,8 +250,7 @@ def main():
     args = parser.parse_args()
     
     df = pd.read_csv(args.video_info_path)
-    fps = int(df[df['video_id'] == args.kitchen]['fps'])
-    fps = 60 if fps == 59 else fps
+    fps = round(*df[df['video_id'] == args.kitchen]['fps'])
 
 
     R = [0.3, 0.6, 0.9] # list of distance thresholds in meters
