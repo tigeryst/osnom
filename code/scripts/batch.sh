@@ -21,11 +21,12 @@ export COLMAP_COMMAND  # export so reconstruct_mesh.sh sees it
 
 VIDEO_IDS_PATH="code/scripts/videos.txt"
 
+# Download everything first in case of network issues
 while IFS= read -r VIDEO_ID; do
     # Skip empty lines
     [ -z "$VIDEO_ID" ] && continue
 
-    log INFO "Processing video: $VIDEO_ID"
+    log INFO "Downloading assets: $VIDEO_ID"
 
     # Assumes $DATA_ROOT/frame_mapping.json has been downloaded
     # Assumes Depth-Anything repo has been cloned to ../Depth-Anything
@@ -45,6 +46,14 @@ while IFS= read -r VIDEO_ID; do
     # $DATA_ROOT/aggregated/$VIDEO_ID/poses.json
     ./code/scripts/download_poses.sh $VIDEO_ID --data-root $DATA_ROOT
     log INFO "3D poses downloaded for $VIDEO_ID"
+
+done <"$VIDEO_IDS_PATH"
+
+while IFS= read -r VIDEO_ID; do
+    # Skip empty lines
+    [ -z "$VIDEO_ID" ] && continue
+
+    log INFO "Processing video: $VIDEO_ID"
 
     # $DATA_ROOT/colmap_models/dense3D/$VIDEO_ID
     ./code/scripts/reconstruct_mesh.sh $VIDEO_ID --data-root $DATA_ROOT

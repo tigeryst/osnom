@@ -2,9 +2,7 @@
 **/.DS_Store
 
 # Temporary directories
-data/EpicKitchens-100/
-data/EpicKitchens-VISOR/
-data/EpicFields/
+data/temp_downloads/
 
 # Data and output directories
 data/images/
