@@ -33,14 +33,14 @@ video_num=$(echo "$VIDEO_ID" | cut -d'_' -f2)
 echo "Downloading tarball to $TARBALL_PATH"
 if [ "$video_num" -lt 100 ]; then
     URL="https://data.bris.ac.uk/datasets/3h91syskeag572hl6tvuovwv4d/frames_rgb_flow/rgb/train/$participant/$VIDEO_ID.tar"
-    wget -c "$URL" -O "$TARBALL_PATH" || {
+    wget --no-check-certificate -c "$URL" -O "$TARBALL_PATH" || {
         echo "Primary URL (train) failed, trying alternative (test) for $VIDEO_ID"
         ALT_URL="https://data.bris.ac.uk/datasets/3h91syskeag572hl6tvuovwv4d/frames_rgb_flow/rgb/test/$participant/$VIDEO_ID.tar"
-        wget -c "$ALT_URL" -O "$TARBALL_PATH"
+        wget --no-check-certificate -c "$ALT_URL" -O "$TARBALL_PATH"
     }
 else
     URL="https://data.bris.ac.uk/datasets/2g1n6qdydwa9u22shpxqzp0t8m/$participant/rgb_frames/$VIDEO_ID.tar"
-    wget -c "$URL" -O "$TARBALL_PATH"
+    wget --no-check-certificate -c "$URL" -O "$TARBALL_PATH"
 fi
 
 echo "Extracting $TARBALL_PATH to $IMAGES_DIR"

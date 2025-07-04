@@ -28,10 +28,10 @@ mkdir -p "$MASKS_DIR"
 
 echo "Downloading zip to $ZIP_PATH"
 URL="https://data.bris.ac.uk/datasets/2v6cgv1x04ol22qp9rm9x2j6a7/Interpolations-DenseAnnotations/train/${VIDEO_ID}_interpolations.zip"
-wget -c "$URL" -O "$ZIP_PATH" || {
+wget --no-check-certificate -c "$URL" -O "$ZIP_PATH" || {
     echo "Primary URL (train) failed, trying alternative (val) for $VIDEO_ID"
     ALT_URL="https://data.bris.ac.uk/datasets/2v6cgv1x04ol22qp9rm9x2j6a7/Interpolations-DenseAnnotations/val/${VIDEO_ID}_interpolations.zip"
-    wget -c "$ALT_URL" -O "$ZIP_PATH"
+    wget --no-check-certificate -c "$ALT_URL" -O "$ZIP_PATH"
 }
 
 echo "Unzipping $ZIP_PATH to $MASKS_DIR"
