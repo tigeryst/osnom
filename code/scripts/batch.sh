@@ -82,9 +82,9 @@ while IFS= read -r VIDEO_ID; do
 
     # Track objects
     if $VISUALIZE; then
-        ./code/scripts/run_lmk.py $VIDEO_ID --data-root $DATA_ROOT --visualize
+        python code/scripts/run_lmk.py $VIDEO_ID --data-root $DATA_ROOT --visualize
     else
-        ./code/scripts/run_lmk.py $VIDEO_ID --data-root $DATA_ROOT
+        python code/scripts/run_lmk.py $VIDEO_ID --data-root $DATA_ROOT
     fi
     log INFO "LMK tracking completed for $VIDEO_ID"
 
