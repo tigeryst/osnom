@@ -30,9 +30,13 @@ if [ -f "$FINAL_MESH_PATH" ]; then
     exit 0
 fi
 
-# COLMAP_COMMAND="singularity exec --fakeroot --nv --bind $PWD colmap.sif colmap" # Built from https://gist.github.com/shubham-goel/31b63f6b7499a7d61090a9e32a9f1a26
-# COLMAP_COMMAND="singularity exec --nv --bind $PWD docker://colmap/colmap:latest colmap"
-COLMAP_COMMAND="colmap"
+# Prompt for COLMAP_COMMAND if not set in the environment
+if [ -z "${COLMAP_COMMAND:-}" ]; then
+    read -p "Enter COLMAP_COMMAND [default: colmap]: " user_input
+    COLMAP_COMMAND="${user_input:-colmap}"
+fi
+
+echo "Using COLMAP_COMMAND: $COLMAP_COMMAND"
 
 echo "colmap image_undistorter"
 $COLMAP_COMMAND image_undistorter \

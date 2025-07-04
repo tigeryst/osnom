@@ -12,6 +12,13 @@ parse_batch_args "$@"
 # echo "Processing video: $VIDEO_ID"
 echo "Using data root: $DATA_ROOT"
 
+# Prompt for COLMAP_COMMAND
+if [ -z "${COLMAP_COMMAND:-}" ]; then
+    read -p "Enter COLMAP_COMMAND to use for reconstruction [default: colmap]: " user_input
+    COLMAP_COMMAND="${user_input:-colmap}"
+fi
+export COLMAP_COMMAND  # export so reconstruct_mesh.sh sees it
+
 VIDEO_IDS_PATH="code/scripts/videos.txt"
 
 while IFS= read -r VIDEO_ID; do
