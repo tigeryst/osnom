@@ -40,7 +40,7 @@ while IFS= read -r VIDEO_ID; do
     log INFO "3D poses downloaded for $VIDEO_ID"
 
     # $DATA_ROOT/colmap_models/dense3D/$VIDEO_ID
-    ./code/mesh_generation_code/reconstruct_mesh.sh $VIDEO_ID --data-root $DATA_ROOT
+    ./code/scripts/reconstruct_mesh.sh $VIDEO_ID --data-root $DATA_ROOT
     log INFO "Dense mesh reconstructed for $VIDEO_ID"
 
     # Copy mesh
