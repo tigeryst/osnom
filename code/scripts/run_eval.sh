@@ -27,6 +27,6 @@ conda activate OSNOM
 python code/evaluation_code/evaluate.py \
     --output_path "$OUTPUT_PATH" \
     --results_path "results/$VIDEO_ID/track/results.pkl" \
-    --video_info_path "$DATA_ROOT/EPIC_100_video_info.csv" \
+    --video_info_path "data/EPIC_100_video_info.csv" \
     --frames_path "$DATA_ROOT/images/$VIDEO_ID" \
     --kitchen "$VIDEO_ID"

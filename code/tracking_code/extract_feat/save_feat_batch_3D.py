@@ -227,7 +227,7 @@ class PHALP(nn.Module):
                                                                     kitchen, True)
 
         # Load frame mapping data
-        with open(os.path.join('data', 'frame_mapping.json')) as f:
+        with open(os.path.join("data", 'frame_mapping.json')) as f:
             self.mapping_dense = json.load(f)
 
         # Process bounding boxes and segmentations

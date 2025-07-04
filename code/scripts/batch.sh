@@ -28,7 +28,7 @@ while IFS= read -r VIDEO_ID; do
 
     log INFO "Downloading assets: $VIDEO_ID"
 
-    # Assumes $DATA_ROOT/frame_mapping.json has been downloaded
+    # Assumes data/frame_mapping.json has been downloaded
     # Assumes Depth-Anything repo has been cloned to ../Depth-Anything
     # Assumes Dropbox API token is set in .dropbox_token
 
