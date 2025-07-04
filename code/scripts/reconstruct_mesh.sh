@@ -38,7 +38,7 @@ fi
 
 echo "Using COLMAP_COMMAND: $COLMAP_COMMAND"
 
-echo "colmap image_undistorter"
+echo "Running: colmap image_undistorter"
 $COLMAP_COMMAND image_undistorter \
     --image_path $IMAGE_PATH \
     --input_path $CAMERAS_PATH \
@@ -47,14 +47,14 @@ $COLMAP_COMMAND image_undistorter \
     --copy_policy soft-link \
     --max_image_size 2000
 
-echo "colmap patch_match_stereo"
+echo "Running: colmap patch_match_stereo"
 $COLMAP_COMMAND patch_match_stereo \
     --workspace_path $DENSE3D_PATH \
     --workspace_format COLMAP \
     --PatchMatchStereo.geom_consistency true \
     --PatchMatchStereo.gpu_index 0
 
-echo "colmap stereo_fusion (min pix$minpix)"
+echo "Running: colmap stereo_fusion (min pix$minpix)"
 $COLMAP_COMMAND stereo_fusion \
     --workspace_path $DENSE3D_PATH \
     --workspace_format COLMAP \
@@ -62,7 +62,7 @@ $COLMAP_COMMAND stereo_fusion \
     --StereoFusion.min_num_pixels $minpix \
     --output_path $DENSE3D_PATH/fused-minpix$minpix.ply
 
-echo "colmap poisson_mesher"
+echo "Running: colmap poisson_mesher"
 $COLMAP_COMMAND poisson_mesher \
     --input_path $DENSE3D_PATH/fused-minpix$minpix.ply \
     --output_path $DENSE3D_PATH/fused-minpix$minpix-meshed-poisson-d10-t5.ply \
@@ -70,10 +70,10 @@ $COLMAP_COMMAND poisson_mesher \
     --PoissonMeshing.num_threads 5 \
     --PoissonMeshing.trim 5
 
-echo "copying fused-minpix$minpix.ply to fused.ply"
+echo "Copying fused-minpix$minpix.ply to fused.ply"
 cp $DENSE3D_PATH/fused-minpix$minpix.ply $DENSE3D_PATH/fused.ply
 cp $DENSE3D_PATH/fused-minpix$minpix.ply.vis $DENSE3D_PATH/fused.ply.vis
-echo "colmap delaunay_mesher"
+echo "Running: colmap delaunay_mesher"
 $COLMAP_COMMAND delaunay_mesher \
     --input_path $DENSE3D_PATH \
     --output_path $FINAL_MESH_PATH \
