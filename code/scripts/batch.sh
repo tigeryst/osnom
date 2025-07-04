@@ -7,7 +7,7 @@ set -eu
 source ./code/scripts/common/log.sh
 
 source ./code/scripts/common/parse_args.sh "$@"
-parse_data_root_args "$@"
+parse_batch_args "$@"
 
 # echo "Processing video: $VIDEO_ID"
 echo "Using data root: $DATA_ROOT"
