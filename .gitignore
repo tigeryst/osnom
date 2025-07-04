@@ -15,3 +15,5 @@ data/aggregated/
 data/frame_mapping.json
 
 results/
+
+**/.dropbox_token

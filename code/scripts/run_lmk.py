@@ -26,7 +26,7 @@ HUNGARIAN_TH = 10
 DISTANCE_TYPE = 'AL'
 
 # Helper Functions
-def get_sweep_config(video_id, data_root):
+def get_sweep_config(video_id, data_root, visualize):
     return {
         "method": "grid",
         "parameters": {
@@ -44,7 +44,7 @@ def get_sweep_config(video_id, data_root):
             "frames_path": {"values": [os.path.join(data_root, "images", video_id)]},
             "kitchen": {"values": [video_id]},
             "use_unproj": {"values": [False]},
-            "visualize": {"values": [False]},
+            "visualize": {"values": [visualize]},
             "save_res": {"values": [True]},
             "random": {"values": [False]},
             "n_init": {"values": [5]},
@@ -82,6 +82,11 @@ def main():
         default="data",
         help="Data root directory path (default: data)",
     )
+    parser.add_argument(
+        "--visualize",
+        action="store_true",
+        help="Enable visualization during tracking",
+    )
 
     args = parser.parse_args()
 
@@ -89,7 +94,7 @@ def main():
     print(f"Using data root: {args.data_root}")
 
     wandb.login()
-    sweep_config = get_sweep_config(args.video_id, args.data_root)
+    sweep_config = get_sweep_config(args.video_id, args.data_root, args.visualize)
     sweep_id = wandb.sweep(sweep_config, project="tuning")
 
     phalp = PHALP()
