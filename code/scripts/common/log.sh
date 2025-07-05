@@ -6,19 +6,30 @@ log() {
 
     # Colors: INFO=cyan, SUCCESS=green, ERROR=red, WARN=yellow
     case "$level" in
-        INFO)
-            color="\033[1;36m" ;;   # bright cyan
-        SUCCESS)
-            color="\033[1;32m" ;;   # bright green
-        WARN)
-            color="\033[1;33m" ;;   # bright yellow
-        ERROR)
-            color="\033[1;31m" ;;   # bright red
-        *)
-            color="\033[0m" ;;      # reset
+    INFO)
+        color="\033[1;36m"
+        ;; # bright cyan
+    SUCCESS)
+        color="\033[1;32m"
+        ;; # bright green
+    WARN)
+        color="\033[1;33m"
+        ;; # bright yellow
+    ERROR)
+        color="\033[1;31m"
+        ;; # bright red
+    *)
+        color="\033[0m"
+        ;; # reset
     esac
 
     reset="\033[0m"
-    # Print with timestamp, level, and color
+
+    # Print colorized log to terminal
     echo -e "${timestamp} [${color}${level}${reset}] $message"
+
+    # Write plain log to log file
+    if { true >&3; } 2>/dev/null; then
+        echo "${timestamp} [${level}] $message" >&3
+    fi
 }
