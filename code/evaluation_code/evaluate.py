@@ -243,13 +243,12 @@ def main():
     parser = argparse.ArgumentParser(description="Evaluate tracking results")
     parser.add_argument('--results_path', type=str, required=True, help='Tracking results.pkl path')
     parser.add_argument('--frames_path', type=str, required=True, help='RGB frames directory path')
-    parser.add_argument('--video_info_path', type=str, required=True, help='EPIC_100_video_info.csv path')
     parser.add_argument('--kitchen', type=str, required=True, help='Video ID')
     parser.add_argument('--output_path', type=str, required=True, help='Output file path')
 
     args = parser.parse_args()
     
-    df = pd.read_csv(args.video_info_path)
+    df = pd.read_csv(os.path.join("data", "EPIC_100_video_info.csv"))
     fps = round(*df[df['video_id'] == args.kitchen]['fps'])
 
 
