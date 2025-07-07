@@ -30,6 +30,34 @@ class PHALP(nn.Module):
         metric = nn_matching.NearestNeighborDistanceMetric(self.cfg, self.cfg.hungarian_th, self.cfg.past_lookback)
         self.tracker = Tracker(self.cfg, metric, max_age=self.cfg.max_age_track, n_init=self.cfg.n_init,
                                phalp_tracker=self, dims=[4096, 4096, 99])
+        
+    def _visualize_frame(self, frame_name, data):
+        if not hasattr(self, 'frames_path') or self.frames_path is None:
+            raise RuntimeError(
+                "The attribute frames_path is not set. "
+                "Make sure to call track() first to initialize required attributes."
+            )
+    
+        if not data['tracked_ids']:
+            print(f"No detections in {frame_name}")
+            return
+
+        cv_image = cv2.imread(os.path.join(self.frames_path, f"{frame_name}.jpg"))
+        cv_image = cv2.resize(cv_image, (854, 480))
+        cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+
+        for bbox, tr_id in zip(data['tracked_bbox'], data['tracked_ids']):
+            cv_image = visualize_mask(
+                cv_image,
+                None,
+                bbox,
+                color=np.array(self.RGB_tuples[tr_id]),
+                text=f"track id: {tr_id}"
+            )
+
+        img = Image.fromarray(cv_image)
+        img.save(os.path.join(self.path_to_save, f"{frame_name}.jpg"))
+
 
     def track(self, config=None, debug=False):
         wb = wandb.init(config=config)
@@ -60,11 +88,29 @@ class PHALP(nn.Module):
 
         self.setup_deepsort()
 
+        results_path = os.path.join(self.path_to_save, 'results.pkl')
+        visualize_done_path = os.path.join(self.path_to_save, 'visualize.done')
+
+        # If results.pkl already exists, load it
+        if os.path.exists(results_path):
+            with open(results_path, 'rb') as f:
+                final_visuals_dic = pickle.load(f)
+            print(f"Loaded existing results from {results_path}")
+
+            if self.cfg.visualize:
+                # Check if visualization is already done
+                if os.path.exists(visualize_done_path):
+                    print("Visualization already done. Skipping...")
+                else:
+                    print("Visualizing existing results...")
+                    for frame_name, data in final_visuals_dic.items():
+                        self._visualize_frame(frame_name, data)
+            
+            return # exit if results already exist
+
+        # Track frame by frame
         for t_, frame_name in tqdm(enumerate(sorted(self.frames)), total=len(self.frames)):
             _, bbs, objs = self.bbs_dict.get(f"{self.cfg.kitchen}_{frame_name}", (None, [], []))
-            if t_ == len(self.frames) - 1 and self.save_res:
-                with open(os.path.join(self.path_to_save, 'results.pkl'), 'wb') as f:
-                    pickle.dump(final_visuals_dic, f)
 
             detections = []
             removed_indices = []
@@ -75,8 +121,8 @@ class PHALP(nn.Module):
                     features_3d = self.all_loca[frame_name]
                 except KeyError:
                     print('Frame features not found!')
-                    with open(os.path.join(self.path_to_save, 'results.pkl'), 'wb') as f:
-                        pickle.dump(final_visuals_dic, f)
+                    with open(os.path.join(self.path_to_save, 'tmp.pkl'), 'wb') as f:
+                        pickle.dump(final_visuals_dic, f) # save current state for debugging
                     continue
 
                 if self.cfg.kitchen in items_dict:
@@ -127,13 +173,14 @@ class PHALP(nn.Module):
                     final_visuals_dic[frame_name]['radius'].append(track_data_hist['radius'])
 
             if self.cfg.visualize:
-                if final_visuals_dic[frame_name]['tracked_ids']:
-                    cv_image = cv2.imread(os.path.join(self.frames_path, f"{frame_name}.jpg"))
-                    cv_image = cv2.resize(cv_image, (854, 480))
-                    cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
-                    for bbox, tr_id in zip(final_visuals_dic[frame_name]['tracked_bbox'], final_visuals_dic[frame_name]['tracked_ids']):
-                        cv_image = visualize_mask(cv_image, None, bbox, color=np.array(self.RGB_tuples[tr_id]), text=f"track id: {tr_id}")
-                    img = Image.fromarray(cv_image)
-                    img.save(os.path.join(self.path_to_save, f"{frame_name}.jpg"))
-                else:
-                    print('No detections')
+                self._visualize_frame(frame_name, final_visuals_dic[frame_name])
+
+        # Save the final results
+        if self.save_res:
+            with open(results_path, 'wb') as f:
+                pickle.dump(final_visuals_dic, f)
+
+        # Touch visualize done token
+        if self.cfg.visualize:
+            with open(os.path.join(self.path_to_save, 'visualize.done'), 'w') as f:
+                f.write('')
