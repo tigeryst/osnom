@@ -1038,7 +1038,7 @@ def read_data_1(data_path, kitchen, rescale):
                 class_ids.append(class_id)
                 if a['name'] not in class_dict.keys():
                     class_dict[a['name']] = class_id
-    print(kitchen)
+    print(f"Read data for: {kitchen}")
     camera_poses = get_camera_poses(data_path, kitchen, rescale)
 
     pose_avail = [k.split('.')[0] for k in camera_poses.keys()]
