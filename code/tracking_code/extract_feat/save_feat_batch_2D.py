@@ -62,6 +62,12 @@ class PHALP(nn.Module):
 
         # Load the DINOv2 model
         self.model = torch.hub.load('facebookresearch/dinov2', 'dinov2_vitg14')
+
+        # Add DataParallel if more than 1 GPU is available
+        if torch.cuda.device_count() > 1:
+            print(f"Using {torch.cuda.device_count()} GPUs")
+            self.model = nn.DataParallel(self.model)
+            
         self.model = self.model.to(self.device)
 
         # Define image transformation pipeline
