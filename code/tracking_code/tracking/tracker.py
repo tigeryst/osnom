@@ -105,6 +105,10 @@ class PHALP(nn.Module):
                     print("Visualizing existing results...")
                     for frame_name, data in final_visuals_dic.items():
                         self._visualize_frame(frame_name, data)
+
+                    # Touch visualize done token
+                    with open(os.path.join(self.path_to_save, 'visualize.done'), 'w') as f:
+                        f.write('')
             
             return # exit if results already exist
 
