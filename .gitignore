@@ -17,3 +17,7 @@ results/
 **/.dropbox_token
 
 logs/
+
+__pycache__/
+
+.wandb/
