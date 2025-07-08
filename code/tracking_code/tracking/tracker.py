@@ -107,7 +107,7 @@ class PHALP(nn.Module):
                         self._visualize_frame(frame_name, data)
 
                     # Touch visualize done token
-                    with open(os.path.join(self.path_to_save, 'visualize.done'), 'w') as f:
+                    with open(visualize_done_path, 'w') as f:
                         f.write('')
             
             return # exit if results already exist
@@ -186,5 +186,5 @@ class PHALP(nn.Module):
 
         # Touch visualize done token
         if self.cfg.visualize:
-            with open(os.path.join(self.path_to_save, 'visualize.done'), 'w') as f:
+            with open(visualize_done_path, 'w') as f:
                 f.write('')
