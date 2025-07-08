@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./code/scripts/download_masks.sh <video_id> [--data-root <path>]
+# Usage: ./code/scripts/download_masks.sh <video_id> [--storage-root <path>]
 
 set -eu
 
@@ -9,11 +9,11 @@ source ./code/scripts/common/parse_args.sh "$@"
 parse_video_args "$@"
 
 echo "Downloading 2D masks: $VIDEO_ID"
-echo "Using data root: $DATA_ROOT"
+echo "Using storage root: $STORAGE_ROOT"
 
 # Paths
-TEMP_DIR="$DATA_ROOT/temp_downloads"
-MASKS_PATH="$DATA_ROOT/aggregated/$VIDEO_ID/mask_annotations.json"
+TEMP_DIR="$STORAGE_ROOT/data/temp_downloads"
+MASKS_PATH="$STORAGE_ROOT/data/aggregated/$VIDEO_ID/mask_annotations.json"
 MASKS_DIR="$(dirname "$MASKS_PATH")"
 ZIP_PATH="$TEMP_DIR/${VIDEO_ID}_masks.zip"
 

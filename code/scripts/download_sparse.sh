@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./code/scripts/download_sparse.sh <video_id> [--data-root <path>]
+# Usage: ./code/scripts/download_sparse.sh <video_id> [--storage-root <path>]
 
 set -eu
 
@@ -13,11 +13,11 @@ source ./code/scripts/common/auth.sh
 get_dropbox_auth_token
 
 echo "Downloading sparse reconstruction: $VIDEO_ID"
-echo "Using data root: $DATA_ROOT"
+echo "Using storage root: $STORAGE_ROOT"
 
 # Paths
-SPARSE_DIR="$DATA_ROOT/colmap_models/sparse/$VIDEO_ID"
-TEMP_DIR="$DATA_ROOT/temp_downloads"
+SPARSE_DIR="$STORAGE_ROOT/data/colmap_models/sparse/$VIDEO_ID"
+TEMP_DIR="$STORAGE_ROOT/data/temp_downloads"
 ZIP_PATH="$TEMP_DIR/${VIDEO_ID}_sparse.zip"
 DOWNLOAD_DONE_TOKEN="$SPARSE_DIR/download.done"
 

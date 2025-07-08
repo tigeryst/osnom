@@ -4,7 +4,7 @@
 #   source ./code/scripts/common/parse_video_args.sh "$@"
 
 function parse_video_args() {
-    local usage_msg="Usage: $0 <video_id> [--data-root <path>]"
+    local usage_msg="Usage: $0 <video_id> [--storage-root <path>]"
 
     if [ $# -lt 1 ]; then
         echo "$usage_msg"
@@ -14,19 +14,19 @@ function parse_video_args() {
     VIDEO_ID=$1
     shift
 
-    # Expect arguments starting with optional --data-root
+    # Expect arguments starting with optional --storage-root
 
-    # Sets DATA_ROOT, defaults to 'data'
-    DATA_ROOT="data"
+    # Sets STORAGE_ROOT, defaults to '.'
+    STORAGE_ROOT="."
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
-        --data-root)
+        --storage-root)
             if [ $# -lt 2 ]; then
-                echo "Error: --data-root requires a value."
+                echo "Error: --storage-root requires a value."
                 exit 1
             fi
-            DATA_ROOT="$2"
+            STORAGE_ROOT="$2"
             shift 2
             ;;
         *)
@@ -39,23 +39,23 @@ function parse_video_args() {
     done
 
     export VIDEO_ID
-    export DATA_ROOT
+    export STORAGE_ROOT
 }
 
 function parse_batch_args() {
-    local usage_msg="Usage: $0 [--data-root <path>] [--visualize]"
+    local usage_msg="Usage: $0 [--storage-root <path>] [--visualize]"
 
-    DATA_ROOT="data"
+    STORAGE_ROOT="."
     VISUALIZE="false"  # default: visualization disabled
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
-        --data-root)
+        --storage-root)
             if [ $# -lt 2 ]; then
-                echo "Error: --data-root requires a value."
+                echo "Error: --storage-root requires a value."
                 exit 1
             fi
-            DATA_ROOT="$2"
+            STORAGE_ROOT="$2"
             shift 2
             ;;
         --visualize)
@@ -64,12 +64,12 @@ function parse_batch_args() {
             ;;
         *)
             echo "Unknown option: $1"
-            echo "Usage: $0 [--data-root <path>] [--visualize]"
+            echo "Usage: $0 [--storage-root <path>] [--visualize]"
             exit 1
             ;;
         esac
     done
 
-    export DATA_ROOT
+    export STORAGE_ROOT
     export VISUALIZE
 }

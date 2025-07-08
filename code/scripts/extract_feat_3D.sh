@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./code/scripts/extract_feat_3D.sh <video_id> [--data-root <path>]
+# Usage: ./code/scripts/extract_feat_3D.sh <video_id> [--storage-root <path>]
 
 set -eu
 
@@ -9,10 +9,10 @@ source ./code/scripts/common/parse_args.sh "$@"
 parse_video_args "$@"
 
 echo "Extracting 3D feature: $VIDEO_ID"
-echo "Using data root: $DATA_ROOT"
+echo "Using storage root: $STORAGE_ROOT"
 
 # Paths
-OUTPUT_PATH="results/$VIDEO_ID/feat/3D_feat.pkl"
+OUTPUT_PATH="$STORAGE_ROOT/results/$VIDEO_ID/feat/3D_feat.pkl"
 
 if [ -f "$OUTPUT_PATH" ]; then
     echo "3D features already exist for $VIDEO_ID at $OUTPUT_PATH"
@@ -26,6 +26,6 @@ conda activate OSNOM
 
 python code/tracking_code/extract_feat/save_feat_batch_3D.py \
     --output_path "$OUTPUT_PATH" \
-    --data_path "$DATA_ROOT/aggregated/$VIDEO_ID" \
-    --frames_path "$DATA_ROOT/images/$VIDEO_ID" \
+    --data_path "$STORAGE_ROOT/data/aggregated/$VIDEO_ID" \
+    --frames_path "$STORAGE_ROOT/data/images/$VIDEO_ID" \
     --kitchen "$VIDEO_ID"

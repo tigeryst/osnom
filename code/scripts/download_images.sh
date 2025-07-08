@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./code/scripts/download_images.sh <video_id> [--data-root <path>]
+# Usage: ./code/scripts/download_images.sh <video_id> [--storage-root <path>]
 
 set -eu
 
@@ -9,11 +9,11 @@ source ./code/scripts/common/parse_args.sh "$@"
 parse_video_args "$@"
 
 echo "Downloading RGB frames: $VIDEO_ID"
-echo "Using data root: $DATA_ROOT"
+echo "Using storage root: $STORAGE_ROOT"
 
 # Paths
-TEMP_DIR="$DATA_ROOT/temp_downloads"
-IMAGES_DIR="$DATA_ROOT/images/$VIDEO_ID"
+TEMP_DIR="$STORAGE_ROOT/data/temp_downloads"
+IMAGES_DIR="$STORAGE_ROOT/data/images/$VIDEO_ID"
 TARBALL_PATH="$TEMP_DIR/${VIDEO_ID}_frames.tar"
 DOWNLOAD_DONE_TOKEN="$IMAGES_DIR/download.done"
 

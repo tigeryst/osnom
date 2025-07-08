@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./code/scripts/reconstruct_mesh.sh <video_id> [--data-root <path>]
+# Usage: ./code/scripts/reconstruct_mesh.sh <video_id> [--storage-root <path>]
 
 set -eu
 
@@ -9,12 +9,12 @@ source ./code/scripts/common/parse_args.sh "$@"
 parse_video_args "$@"
 
 echo "Reconstructing mesh: $VIDEO_ID"
-echo "Using data root: $DATA_ROOT"
+echo "Using storage root: $STORAGE_ROOT"
 
 # Paths
-IMAGE_PATH="$DATA_ROOT/images/$VIDEO_ID"
-CAMERAS_PATH="$DATA_ROOT/colmap_models/sparse/$VIDEO_ID/sparse/0"
-DENSE3D_PATH="$DATA_ROOT/colmap_models/dense3D/$VIDEO_ID"
+IMAGE_PATH="$STORAGE_ROOT/data/images/$VIDEO_ID"
+CAMERAS_PATH="$STORAGE_ROOT/data/colmap_models/sparse/$VIDEO_ID/sparse/0"
+DENSE3D_PATH="$STORAGE_ROOT/data/colmap_models/dense3D/$VIDEO_ID"
 
 mkdir -p $DENSE3D_PATH
 

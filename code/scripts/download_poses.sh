@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./code/scripts/download_poses.sh <video_id> [--data-root <path>]
+# Usage: ./code/scripts/download_poses.sh <video_id> [--storage-root <path>]
 
 set -eu
 
@@ -13,10 +13,10 @@ source ./code/scripts/common/auth.sh
 get_dropbox_auth_token
 
 echo "Downloading camera poses: $VIDEO_ID"
-echo "Using data root: $DATA_ROOT"
+echo "Using storage root: $STORAGE_ROOT"
 
 # Paths
-POSES_PATH="$DATA_ROOT/aggregated/$VIDEO_ID/poses.json"
+POSES_PATH="$STORAGE_ROOT/data/aggregated/$VIDEO_ID/poses.json"
 
 # Skip if already downloaded
 if [ -f "$POSES_PATH" ]; then
