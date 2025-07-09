@@ -22,6 +22,10 @@ export COLMAP_COMMAND  # export so reconstruct_mesh.sh sees it
 # Activate environment
 eval "$(conda shell.bash hook)"
 conda activate OSNOM
+
+# Login to WandB
+wandb login
+
 VIDEO_IDS_PATH="code/scripts/videos.txt"
 
 # Download everything first in case of network issues
