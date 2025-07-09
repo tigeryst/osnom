@@ -19,6 +19,9 @@ if [ -z "${COLMAP_COMMAND:-}" ]; then
 fi
 export COLMAP_COMMAND  # export so reconstruct_mesh.sh sees it
 
+# Activate environment
+eval "$(conda shell.bash hook)"
+conda activate OSNOM
 VIDEO_IDS_PATH="code/scripts/videos.txt"
 
 # Download everything first in case of network issues
@@ -27,10 +30,6 @@ while IFS= read -r VIDEO_ID; do
     [ -z "$VIDEO_ID" ] && continue
 
     log INFO "Downloading assets: $VIDEO_ID"
-
-    # Assumes data/frame_mapping.json has been downloaded
-    # Assumes Depth-Anything repo has been cloned to ../Depth-Anything
-    # Assumes Dropbox API token is set in .dropbox_token
 
     # Download RGB frames to $STORAGE_ROOT/data/images/$VIDEO_ID
     ./code/scripts/download_images.sh $VIDEO_ID --storage-root $STORAGE_ROOT
@@ -75,10 +74,6 @@ while IFS= read -r VIDEO_ID; do
     log INFO "2D features extracted for $VIDEO_ID"
     ./code/scripts/extract_feat_3D.sh $VIDEO_ID --storage-root $STORAGE_ROOT
     log INFO "3D features extracted for $VIDEO_ID"
-
-    # Activate environment
-    eval "$(conda shell.bash hook)"
-    conda activate OSNOM
 
     # Track objects
     if $VISUALIZE; then
