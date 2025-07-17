@@ -403,7 +403,7 @@ def get_radius_from_bbox(bbox):
     width = max_x - min_x
     height = max_y - min_y
     radius = 0.5 * (math.sqrt((width ** 2) + (height ** 2)))
-    radius /= 2
+    radius /= 2 #? Why is there division by 2 twice?
     return radius
 
 
@@ -1034,10 +1034,11 @@ def read_data_1(data_path, kitchen, rescale):
             class_ids = []
 
             if 'left hand' not in a['name'] and 'right hand' not in a['name']:
+                # Ignore hands
                 class_id = a['class_id']
                 class_ids.append(class_id)
                 if a['name'] not in class_dict.keys():
-                    class_dict[a['name']] = class_id
+                    class_dict[a['name']] = class_id # assign class_id to name
     print(f"Read data for: {kitchen}")
     camera_poses = get_camera_poses(data_path, kitchen, rescale)
 

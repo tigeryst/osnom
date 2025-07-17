@@ -55,6 +55,7 @@ class PHALP(nn.Module):
 
         # Extract object bounding boxes from annotations
         self.bbs_dict = get_object_bbs_new(self.masks['video_annotations'])
+        #? Why was this not mapped using frame_mapping.json?
 
         # Select the appropriate device (GPU or CPU)
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -114,7 +115,7 @@ class PHALP(nn.Module):
 
             # Read and preprocess the image frame
             image_frame = cv2.imread(os.path.join(self.frames_path, f"{frame_name}.jpg"))
-            image_frame = cv2.resize(image_frame, (854, 480))
+            image_frame = cv2.resize(image_frame, (854, 480)) # TODO: check why they are resizing before cropping. Will the bounding boxes be misaligned?
             image_frame = cv2.cvtColor(image_frame, cv2.COLOR_BGR2RGB)
             if not isinstance(image_frame, Image.Image):
                 image_frame = Image.fromarray(image_frame)
@@ -139,7 +140,7 @@ class PHALP(nn.Module):
                     if item not in unique_elements_ordered:
                         unique_elements_ordered.append(item)
                 
-                # Map features to frames
+                # Map  features to frames
                 for i, s in enumerate(unique_elements_ordered):
                     if frame_names.count(s) == len(self.bbs_dict[f"{self.kitchen}_{s}"][0]):
                         save_dict_2D[s] = appe_features[j:j + frame_names.count(s)].cpu().numpy()

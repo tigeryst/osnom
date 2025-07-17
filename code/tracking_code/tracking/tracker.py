@@ -130,6 +130,9 @@ class PHALP(nn.Module):
                     continue
 
                 if self.cfg.kitchen in items_dict:
+                    # Remove pre-defined objects by name from the ground truth
+                    # We will not track or evaluate these objects
+                    # TODO: think of why this behavior is needed
                     duplicates = items_dict[self.cfg.kitchen]
                     gt_copy = objs.copy()
                     for item in duplicates:
@@ -139,6 +142,7 @@ class PHALP(nn.Module):
                             removed_indices.append(index)
                     bbs = [b for i, b in enumerate(bbs) if i not in removed_indices]
 
+                # Remove pre-defined objects by name from the features
                 feat_3D = np.delete(features_3d[0], removed_indices, axis=0)
                 radius = np.delete(features_3d[1], removed_indices, axis=0)
                 appe = np.delete(appe_features, removed_indices, axis=0)

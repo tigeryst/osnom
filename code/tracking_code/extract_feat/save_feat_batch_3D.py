@@ -101,6 +101,7 @@ def align_depth1_to_depth2(depth1, depth2, mask, subsample_size=None):
     print(f'alpha: {alpha}, beta: {beta}')
 
     return depth1_aligned.cpu().numpy()
+
 def rename_keys(kitchen, original_dict, mapping_dict):
     # Create a new dictionary with the keys renamed
     renamed_dict = {}
@@ -110,7 +111,7 @@ def rename_keys(kitchen, original_dict, mapping_dict):
                 kitchen + '_' + old_key + '.jpg']
             renamed_dict[new_key.split('.')[0]] = sub_dict
         except:
-            renamed_dict[old_key] = sub_dict
+            renamed_dict[old_key] = sub_dict #! cannot fall-back like this because old_key is of the form frame_xxxxxxx while bbs_dict is expected to be kitchen-id_frame_xxxxxxx. Luckily this probably wasn't used otherwise we would have seen a key error...
 
     return renamed_dict
 
