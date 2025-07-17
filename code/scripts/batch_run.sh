@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./code/scripts/batch.sh [--storage-root <path>] [--visualize]
+# Usage: ./code/scripts/batch_run.sh [--storage-root <path>] [--visualize]
 
 set -eu
 
@@ -9,7 +9,6 @@ source ./code/scripts/common/log.sh
 source ./code/scripts/common/parse_args.sh "$@"
 parse_batch_args "$@"
 
-# echo "Processing video: $VIDEO_ID"
 echo "Using storage root: $STORAGE_ROOT"
 
 # Prompt for COLMAP_COMMAND
@@ -28,30 +27,6 @@ wandb login
 
 VIDEO_IDS_PATH="code/scripts/videos.txt"
 
-# Download everything first in case of network issues
-while IFS= read -r VIDEO_ID; do
-    # Skip empty lines
-    [ -z "$VIDEO_ID" ] && continue
-
-    log INFO "Downloading assets: $VIDEO_ID"
-
-    # Download RGB frames to $STORAGE_ROOT/data/images/$VIDEO_ID
-    ./code/scripts/download_images.sh $VIDEO_ID --storage-root $STORAGE_ROOT
-    log INFO "Images downloaded for $VIDEO_ID"
-
-    # $STORAGE_ROOT/data/colmap_models/sparse/$VIDEO_ID
-    ./code/scripts/download_sparse.sh $VIDEO_ID --storage-root $STORAGE_ROOT
-    log INFO "Sparse model downloaded for $VIDEO_ID"
-
-    # $STORAGE_ROOT/data/aggregated/$VIDEO_ID/mask_annotations.json
-    ./code/scripts/download_masks.sh $VIDEO_ID --storage-root $STORAGE_ROOT
-    log INFO "2D masks downloaded for $VIDEO_ID"
-    # $STORAGE_ROOT/data/aggregated/$VIDEO_ID/poses.json
-    ./code/scripts/download_poses.sh $VIDEO_ID --storage-root $STORAGE_ROOT
-    log INFO "3D poses downloaded for $VIDEO_ID"
-
-done <"$VIDEO_IDS_PATH"
-
 while IFS= read -r VIDEO_ID; do
     # Skip empty lines
     [ -z "$VIDEO_ID" ] && continue
@@ -59,7 +34,7 @@ while IFS= read -r VIDEO_ID; do
     log INFO "Processing video: $VIDEO_ID"
 
     # $STORAGE_ROOT/data/colmap_models/dense3D/$VIDEO_ID
-    ./code/scripts/reconstruct_mesh.sh $VIDEO_ID --storage-root $STORAGE_ROOT
+    ./code/scripts/reconstruct_mesh.sh "$VIDEO_ID" --storage-root "$STORAGE_ROOT"
     log INFO "Dense mesh reconstructed for $VIDEO_ID"
 
     # Copy mesh
@@ -74,21 +49,21 @@ while IFS= read -r VIDEO_ID; do
     fi
 
     # Extract features
-    ./code/scripts/extract_feat_2D.sh $VIDEO_ID --storage-root $STORAGE_ROOT
+    ./code/scripts/extract_feat_2D.sh "$VIDEO_ID" --storage-root "$STORAGE_ROOT"
     log INFO "2D features extracted for $VIDEO_ID"
-    ./code/scripts/extract_feat_3D.sh $VIDEO_ID --storage-root $STORAGE_ROOT
+    ./code/scripts/extract_feat_3D.sh "$VIDEO_ID" --storage-root "$STORAGE_ROOT"
     log INFO "3D features extracted for $VIDEO_ID"
 
     # Track objects
     if $VISUALIZE; then
-        python code/scripts/run_lmk.py $VIDEO_ID --storage-root $STORAGE_ROOT --visualize
+        python code/scripts/run_lmk.py "$VIDEO_ID" --storage-root "$STORAGE_ROOT" --visualize
     else
-        python code/scripts/run_lmk.py $VIDEO_ID --storage-root $STORAGE_ROOT
+        python code/scripts/run_lmk.py "$VIDEO_ID" --storage-root "$STORAGE_ROOT"
     fi
     log INFO "LMK tracking completed for $VIDEO_ID"
 
     # Evaluate
-    ./code/scripts/run_eval.sh $VIDEO_ID --storage-root $STORAGE_ROOT
+    ./code/scripts/run_eval.sh "$VIDEO_ID" --storage-root "$STORAGE_ROOT"
     log INFO "Evaluation completed for $VIDEO_ID"
 
     log INFO "Batch processing completed for $VIDEO_ID"
